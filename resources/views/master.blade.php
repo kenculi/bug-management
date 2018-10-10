@@ -30,6 +30,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        .box-body { min-height: 220px; }
+    </style>
 
 </head>
 
@@ -57,6 +60,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h1>
                 @yield('page-header')
             </h1>
+            <div class="breadcrumb">
+                <button type="button" class="btn btn-block btn-default btn-sm">Complete sprint</button>
+            </div>
         </section>
 
         <!-- Main content -->

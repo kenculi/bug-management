@@ -1,0 +1,16 @@
+{
+    "name": "Board",
+    "alias": "board",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Board\\Providers\\BoardServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
