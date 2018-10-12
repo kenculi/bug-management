@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title') | .Bug management</title>
+    <title>@yield('title') | Bug management</title>
     <link rel="shortcut icon" href="/assets/img/favicon.ico">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -32,6 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <![endif]-->
     <style type="text/css">
         .box-body { min-height: 220px; }
+        .skin-yellow-light .sidebar-form { margin: 10px 0px; }
     </style>
 
 </head>
@@ -61,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @yield('page-header')
             </h1>
             <div class="breadcrumb">
-                <button type="button" class="btn btn-block btn-default btn-sm">Complete sprint</button>
+                <button type="button" class="btn btn-block btn-success btn-sm">Complete project</button>
             </div>
         </section>
 
