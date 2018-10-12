@@ -1,13 +1,3 @@
-<form action="#" method="get" class="sidebar-form">
-    <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Search...">
-        <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-            </span>
-    </div>
-</form>
-<!-- /.search form -->
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">MENU</li>
     <!-- Optionally, you can add icons to the links -->
@@ -20,7 +10,7 @@
         </ul>
     </li> --}}
     <li><a href="#"><i class="fa fa-list"></i> <span>Backlog</span></a></li>
-    <li><a href="#"><i class="fa fa-list-alt"></i> <span>Board</span></a></li>
+    <li><a href="/board"><i class="fa fa-list-alt"></i> <span>Board</span></a></li>
     {{-- <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
