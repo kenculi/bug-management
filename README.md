@@ -7,7 +7,7 @@
 * Follow [the official guide](https://docs.docker.com/compose/install/) to install Docker Compose for Ubuntu
 
 - Windows:
-* Follow [the official guide](https://docs.docker.com/docker-for-windows/install/#about-windows-containers) to install Docker for Windows
+* Follow [the official guide](https://docs.docker.com/toolbox/toolbox_install_windows/) to install Docker for Windows
 
 ### Configuring the application
 
