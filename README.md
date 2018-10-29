@@ -16,8 +16,15 @@
 
 ```sh
 $ docker-compose up -d (Linux)
-$ docker-compose up -d
 ```
+Start Docker Quickstart application on Window
+
+Cd to project path run below command:
+```sh
+$ cp .env.example .env
+$ docker ps
+```
+
 
 You should be able to visit the application at [http://localhost:8082](http://localhost:8082).
 
@@ -37,7 +44,8 @@ You should be able to visit the application at [http://localhost:8082](http://lo
 * ```php artisan route:list```
 
 ## Update vendors
-
+Run ```composer install``` or to get vendor
+```composer update``` to update vendor to latest
 When update vendors, remember to:
 
 * copy [/vendor/nwidart/laravel-modules/config/config.php] to [/config/modules.php]
