@@ -8,7 +8,8 @@
 * Run ```php artisan serve```
 * Copy file **.env.example** to **.env**
 * import database to phpmyadmin by this url http://localhost/phpmyadmin
-* Go to URL ```http://localhost/[ten thu muc]/public/```
+* Create vhost to have a nice domain on local PC following this [video](https://i.imgur.com/Bq5yOau.gifv)
+* Go to URL ```http://bug.net/```
 
 
 ## Running with Docker
