@@ -1,3 +1,16 @@
+## Running with xamp/wamp
+* install composer follow this [guide](https://freetuts.net/composer-la-gi-695.html)
+* install *xamp/ wamp* 
+* Should restart your PC after installing above
+* Copy project's source to **www (wamp)/ htdocs (xamp)**
+* Start wamp/xamp
+* ```cd ``` to project and run ```composer install``` to get vendor
+* Run ```php artisan serve```
+* Copy file **.env.example** to **.env**
+* import database to phpmyadmin by this url http://localhost/phpmyadmin
+* Go to URL ```http://localhost/[ten thu muc]/public/```
+
+
 ## Running with Docker
 
 ### Installing Docker
@@ -46,6 +59,7 @@ You should be able to visit the application at [http://localhost:8082](http://lo
 ## Update vendors
 Run ```composer install``` or to get vendor
 ```composer update``` to update vendor to latest
+
 When update vendors, remember to:
 
 * copy [/vendor/nwidart/laravel-modules/config/config.php] to [/config/modules.php]
