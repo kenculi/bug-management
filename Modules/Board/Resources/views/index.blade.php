@@ -58,13 +58,14 @@
     	<div class="col-md-2 column">
     		<div class="box">
     			<div class="box-header with-border">
-    				<h3 class="box-title">Backlog</h1>
+    				<h3 class="box-title">Khởi tạo</h1>
     			</div>
     			<div class="box-body">
                     <ul id="card_list_1" class="connectedSortable todo-list card_list">
                         <li id="1"><a href="javascript:;" class="modal-trigger" data-url="/board/bug-detail/1">Title 1</a></li>
                         <li id="2">Title 2</li>
                         <li id="3">Title 3</li>
+                        <li> <a href="">Link tạo issue</a></li>
                     </ul>
                 </div>
     		</div>
@@ -72,11 +73,12 @@
     	<div class="col-md-2 column">
     		<div class="box">
     			<div class="box-header with-border">
-    				<h3 class="box-title">Working</h1>
+    				<h3 class="box-title">Thực thi</h1>
     			</div>
     			<div class="box-body">
                     <ul id="card_list_2" class="connectedSortable todo-list card_list">
-
+                        <li> <a href="">Link tạo issue</a></li>
+                        
                     </ul>
                 </div>
     		</div>
@@ -84,11 +86,11 @@
     	<div class="col-md-2 column">
     		<div class="box">
     			<div class="box-header with-border">
-    				<h3 class="box-title">Reviewing</h1>
+    				<h3 class="box-title">Kiểm tra</h1>
     			</div>
     			<div class="box-body">
                     <ul id="card_list_3" class="connectedSortable todo-list card_list">
-
+                        <li> <a href="">Link tạo issue</a></li>
                     </ul>
                 </div>
     		</div>
@@ -96,7 +98,7 @@
     	<div class="col-md-2 column">
     		<div class="box">
     			<div class="box-header with-border">
-    				<h3 class="box-title">Done</h1>
+    				<h3 class="box-title">Hoàn thành</h1>
     			</div>
     			<div class="box-body">
                     <ul id="card_list_4" class="connectedSortable todo-list card_list">
