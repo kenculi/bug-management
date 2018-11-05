@@ -28,6 +28,13 @@
 @stop
 
 @section('content')
+    <div id='my-modal' class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <iframe src="" width="100%" scrolling="yes" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
     <!-- /.search form -->
     <div class="row after_row">
         <div class="col-md-2">
@@ -55,7 +62,7 @@
     			</div>
     			<div class="box-body">
                     <ul id="card_list_1" class="connectedSortable todo-list card_list">
-                        <li id="1">Title 1</li>
+                        <li id="1"><a href="javascript:;" class="modal-trigger" data-url="/board/bug-detail/1">Title 1</a></li>
                         <li id="2">Title 2</li>
                         <li id="3">Title 3</li>
                     </ul>
