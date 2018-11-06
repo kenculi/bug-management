@@ -7,7 +7,7 @@
         <span class="projTitle">Bug ID</span>
     </h4>
 </div>
-<div class="box-body">
+<div class="box-body form-scrolling">
     <div class="row">
         <div class="col-md-7 col-xs-7">
             <h3>Bug title</h3>
@@ -20,17 +20,32 @@
             <div>
                 <textarea class="form-control" placeholder="Add a description..."></textarea>
             </div>
-            <div>
-                <h4 class="box-title">Activities</h4>
-                <div class="input-group-btn">
-                  <button class="btn btn-warning dropdown-toggle pull-right" data-toggle="dropdown">Comments
-                    <span class="fa fa-caret-down"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                    </ul>
+            <div class="form-group">
+                <div class="row">
+                    <h4 class="col-md-2 col-xs-2">Activities</h4>
+                    <div class="col-md-10 col-xs-10">
+                        <span class="dropdown-toggle pull-right" data-toggle="dropdown">Comments
+                        <span class="fa fa-caret-down"></span></span>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#">History</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2 col-xs-2">
+                        <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="col-md-10 col-xs-10">
+                        <textarea class="form-control" placeholder="Add a comment..."></textarea>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="input-group">
+                <img src="/images/icons_user.svg" class="img-circle" alt="User Image" width="10%">
+                <textarea class="form-control" placeholder="Add a comment..."></textarea>
+            </div> --}}
         </div>
         <div class="col-md-5 col-xs-5">
             <dl>
@@ -45,6 +60,22 @@
                 <dt>Ưu tiên</dt>
                 <dd>e</dd>
             </dl>
+            <hr>
+            <div id="moreInfo" class="collapse">
+                <dl>
+                    <dt>Status</dt>
+                    <dd>a</dd>
+                    <dt>Người thực hiện</dt>
+                    <dd>b</dd>
+                    <dt>Người báo cáo</dt>
+                    <dd>c</dd>
+                </dl>
+            </div>
+            <div><a class="btn-toggle-advance" data-toggle="collapse" href="#moreInfo">Show more</a></div>
+            <div>
+                <p>Created 4 hours ago</p>
+                <p>Updated 32 minutes ago</p>
+            </div>
         </div>
     </div>
 </div>

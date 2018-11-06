@@ -7,12 +7,3 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-.box-body
-	min-height: 220px;
-
-.modal-content
-    iframe
-        @include transition(all .3s ease-in-out);
-.modal-footer
-    text-align: center;

@@ -12,39 +12,35 @@
 }
 
 html {
-  overflow: hidden;
+    overflow: hidden;
 }
 
-.form-scrolling .box-body {
-  height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
+.form-scrolling {
+    height: 345px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.form-scrolling .box-body::-moz-selection {
-  background: #FFF5B8;
-  display: block;
+.form-scrolling::-moz-selection {
+    background: #FFF5B8;
+    display: block;
 }
-
-.form-scrolling .box-body::-webkit-scrollbar-track {
-  background-color: #eeeeee;
+.form-scrolling::-webkit-scrollbar-track {
+    background-color: #eeeeee;
 }
-
-.form-scrolling .box-body::-webkit-scrollbar {
-  width: 8px;
-  background-color: #cccccc;
+.form-scrolling::-webkit-scrollbar {
+    width: 8px;
+    background-color: #cccccc;
 }
-
-.form-scrolling .box-body::-webkit-scrollbar-thumb {
-  background-color: #cccccc;
-  border: none;
+.form-scrolling::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border: none;
 }
-
 .form-scrolling .control {
-  margin: 0 15px 10px 0;
-  vertical-align: middle;
+    margin: 0 15px 10px 0;
+    vertical-align: middle;
 }
 
 .padding-right-10 {
-  padding-right: 10px;
+    padding-right: 10px;
 }

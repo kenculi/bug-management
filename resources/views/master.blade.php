@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.bootstrap3.min.css">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/main_app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/iframe.css') }}">
     @yield('cssloader')
 
@@ -96,8 +96,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.8.0/full/ckeditor.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/moment.min.js"></script>
-<script src="{{ asset('js/modals.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/modals.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main_app.js') }}"></script>
 @yield('jsloader')
 @yield('script')
 <script>
