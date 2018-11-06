@@ -1,4 +1,20 @@
 @extends('iframe')
+@section('cssloader')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style type="text/css">
+    .flex-display {
+        display: flex;
+    }
+    .flex-center {
+        display: flex;
+        align-items: center;
+    }
+
+    .flex-right {
+        justify-content: flex-end;
+    }
+</style>
+@stop
 @section('content')
 <div class="modal-header">
     <button type="button" class="close btn-cancel" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -21,13 +37,13 @@
                 <textarea class="form-control" placeholder="Add a description..."></textarea>
             </div>
             <div class="form-group">
-                <div class="row">
+                <div class="row flex-display">
                     <h4 class="col-md-2 col-xs-2">Activities</h4>
-                    <div class="col-md-10 col-xs-10">
-                        <span class="dropdown-toggle pull-right" data-toggle="dropdown">Comments
+                    <div class="col-md-10 col-xs-10 flex-center flex-right">
+                        <span class="dropdown-toggle" data-toggle="dropdown">Comments
                         <span class="fa fa-caret-down"></span></span>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="#">History</a></li>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-item"><a href="#">History</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,19 +58,37 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="input-group">
-                <img src="/images/icons_user.svg" class="img-circle" alt="User Image" width="10%">
-                <textarea class="form-control" placeholder="Add a comment..."></textarea>
-            </div> --}}
         </div>
         <div class="col-md-5 col-xs-5">
             <dl>
                 <dt>Status</dt>
                 <dd>a</dd>
                 <dt>Người thực hiện</dt>
-                <dd>b</dd>
+                <dd>
+                    <div class="form-group">
+                        <div class="row flex-display">
+                            <div class="col-md-2 col-xs-2">
+                                <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
+                            </div>
+                            <div class="col-md-10 col-xs-10 flex-center">
+                                Unknow
+                            </div>
+                        </div>
+                    </div>
+                </dd>
                 <dt>Người báo cáo</dt>
-                <dd>c</dd>
+                <dd>
+                    <div class="form-group">
+                        <div class="row flex-display">
+                            <div class="col-md-2 col-xs-2">
+                                <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
+                            </div>
+                            <div class="col-md-10 col-xs-10 flex-center">
+                                Unknow
+                            </div>
+                        </div>
+                    </div>
+                </dd>
                 <dt>Nhãn</dt>
                 <dd>d</dd>
                 <dt>Ưu tiên</dt>

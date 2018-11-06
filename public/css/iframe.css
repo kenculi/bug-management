@@ -16,7 +16,7 @@ html {
 }
 
 .form-scrolling {
-    height: 345px;
+    height: 400px;
     overflow-y: auto;
     overflow-x: hidden;
 }
