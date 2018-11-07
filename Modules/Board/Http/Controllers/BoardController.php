@@ -5,6 +5,9 @@ namespace Modules\Board\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use App\Issue;
+use App\IssueStatus;
+use App\Project;
 
 class BoardController extends Controller
 {
@@ -12,26 +15,17 @@ class BoardController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $open = DB::table('issue')
-        //         ->join('issue_status', 'issue.issue_status', '=', 'issue_status.id')
-        //         ->where('issue_status.id','=','1')
-        //         ->select('issue.*');
-        // $todo = DB::table('issue')
-        //         ->join('issue_status', 'issue.issue_status', '=', 'issue_status.id')
-        //         ->where('issue_status.id','=','2')
-        //         ->select('issue.*');
-        // $in_progress = DB::table('issue')
-        //         ->join('issue_status', 'issue.issue_status', '=', 'issue_status.id')
-        //         ->where('issue_status.id','=','4')
-        //         ->select('issue.*');
-        // $complete = DB::table('issue')
-        //         ->join('issue_status', 'issue.issue_status', '=', 'issue_status.id')
-        //         ->where('issue_status.id','=','3')
-        //         ->select('issue.*');
-        // return view('board::index',['open'=>$open,'todo'=>$todo,'in_progress'=>$in_progress,'complete'=>$complete]);
-        return view('board::index');
+        $project = Project::where('id', $request->proj_id)->select('name')->first();
+        
+        $project_name = $project->name;
+
+        $issue_status = IssueStatus::where('proj_id', $request->proj_id)->orWhere('proj_id', null)->get();
+        
+        $issues = Issue::where('proj_id', $request->proj_id)->get();
+
+        return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_statuss' => $issue_status]);
     }
 
     /**
