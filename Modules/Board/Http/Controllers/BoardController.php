@@ -17,13 +17,15 @@ class BoardController extends Controller
      */
     public function index(Request $request)
     {
-        $project = Project::where('id', $request->proj_id)->select('name')->first();
+        $params = $request->all();
+        $projectId = !empty($params['proj_id']) ? (int)$params['proj_id'] : 0;
+        $project = Project::where('id', $projectId)->select('name')->first();
         
-        $project_name = $project->name;
+        $project_name = !empty($project->name) ?: "Unknow";
 
-        $issue_status = IssueStatus::where('proj_id', $request->proj_id)->orWhere('proj_id', null)->get();
+        $issue_status = IssueStatus::where('proj_id', $projectId)->orWhere('proj_id', null)->get();
         
-        $issues = Issue::where('proj_id', $request->proj_id)->get();
+        $issues = Issue::where('proj_id', $projectId)->get();
 
         return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_statuss' => $issue_status]);
     }
@@ -36,5 +38,10 @@ class BoardController extends Controller
     public function bugDetail(Request $request)
     {
         return view('board::bug-detail');
+    }
+
+    public function createIssue(Request $request)
+    {
+        return view('board::create-issue');
     }
 }
