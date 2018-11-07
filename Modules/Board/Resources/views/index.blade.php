@@ -1,6 +1,6 @@
 @extends('master')
 @section('title', 'Board')
-@section('page-header', 'Project A')
+@section('page-header') {{ $project_name }} @stop
 @section('cssloader')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
@@ -61,56 +61,25 @@
     </div>
 
     <div class="row">
+        @foreach ($issue_statuss as $issue_status)
     	<div class="col-md-2 column">
     		<div class="box">
     			<div class="box-header with-border">
-    				<h3 class="box-title">Backlog</h1>
+    				<h3 class="box-title">{{ $issue_status->name }}</h1>
     			</div>
     			<div class="box-body">
                     <ul id="card_list_1" class="connectedSortable todo-list card_list">
-                        <li id="1"><a href="javascript:;" class="modal-trigger" data-url="/board/bug-detail/1">Title 1</a></li>
-                        <li id="2">Title 2</li>
-                        <li id="3">Title 3</li>
+                        @foreach ($issues as $issue)
+                            @if ($issue->issue_status == $issue_status->id)
+                                <li id={!! $issue->id !!}><a href="{{ url('/board/bug-detail/'.$issue->id)}}" class="modal-trigger" data-url="{{ url('/board/bug-detail/' .$issue->id) }}">{!! $issue->summary !!}</a></li>
+                            @endif
+                        @endforeach
+                        <li> <a href="">Link tạo issue</a></li>
                     </ul>
                 </div>
     		</div>
     	</div>
-    	<div class="col-md-2 column">
-    		<div class="box">
-    			<div class="box-header with-border">
-    				<h3 class="box-title">Working</h1>
-    			</div>
-    			<div class="box-body">
-                    <ul id="card_list_2" class="connectedSortable todo-list card_list">
-
-                    </ul>
-                </div>
-    		</div>
-    	</div>
-    	<div class="col-md-2 column">
-    		<div class="box">
-    			<div class="box-header with-border">
-    				<h3 class="box-title">Reviewing</h1>
-    			</div>
-    			<div class="box-body">
-                    <ul id="card_list_3" class="connectedSortable todo-list card_list">
-
-                    </ul>
-                </div>
-    		</div>
-    	</div>
-    	<div class="col-md-2 column">
-    		<div class="box">
-    			<div class="box-header with-border">
-    				<h3 class="box-title">Done</h1>
-    			</div>
-    			<div class="box-body">
-                    <ul id="card_list_4" class="connectedSortable todo-list card_list">
-
-                    </ul>
-                </div>
-    		</div>
-    	</div>
+        @endforeach
     	<div class="col-md-1">
     		<button type="button" class="btn btn-default btn-md" title="Create column"> + </button>
     	</div>
