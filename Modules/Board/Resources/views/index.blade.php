@@ -61,8 +61,8 @@
     			<div class="box-header with-border">
     				<h3 class="box-title">{{ $issue_status->name }}</h1>
     			</div>
-    			<div class="box-body">
-                    <ul id="card_list_1" class="connectedSortable todo-list card_list">
+    			<div class="box-body" id={!! $issue_status->id !!}>
+                    <ul id="card_list_1" data="{!! $issue_status->id !!}" class="connectedSortable todo-list card_list">
                         @foreach ($issues as $issue)
                             @if ($issue->issue_status == $issue_status->id)
                                 <li id={!! $issue->id !!}><a href="{{ url('/board/bug-detail/'.$issue->id)}}" class="modal-trigger" data-url="{{ url('/board/bug-detail/' .$issue->id) }}">{!! $issue->summary !!}</a></li>
