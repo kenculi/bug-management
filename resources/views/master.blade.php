@@ -63,9 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h1>
                 @yield('page-header')
             </h1>
-            <div class="breadcrumb">
-                <button type="button" class="btn btn-block btn-success btn-sm">Complete project</button>
-            </div>
+            @yield('breadcrumb')
         </section>
 
         <!-- Main content -->

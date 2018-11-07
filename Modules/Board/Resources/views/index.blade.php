@@ -27,6 +27,12 @@
 </style>
 @stop
 
+@section('breadcrumb')
+<div class="breadcrumb">
+    <button type="button" class="btn btn-block btn-success btn-sm">Create issue</button>
+</div>
+@stop
+
 @section('content')
     <div id='my-modal' class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg" role="document">
