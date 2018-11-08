@@ -13,5 +13,6 @@ $(function() {
     // $( "#card_list_1, #card_list_2, #card_list_3, #card_list_4" ).sortable({
     $( ".card_list" ).sortable({
         connectWith: ".connectedSortable"
+
     }).disableSelection();
 });
