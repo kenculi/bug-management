@@ -10,18 +10,10 @@ $(function() {
         .find(".box-header")
             .addClass("ui-widget-header ui-corner-all");
 
-    // $( "#card_list_1, #card_list_2, #card_list_3, #card_list_4" ).sortable({
-    // $(".card_list").on("click","li", function(){
-    //     alert($(this).attr("id"));
-    // });
-
     $( ".card_list" ).sortable({
         items: 'li',
         revert: true,
         connectWith: ".connectedSortable",
-        // start: function (event, ui) {
-        //     alert(ui.item.attr('id'));
-        // },
         stop: function (event, ui) {
             var issue_id = ui.item.attr('id');
             var status = ui.item.parent().attr('data-target');
@@ -35,11 +27,4 @@ $(function() {
             });
         }
     }).disableSelection();
-
-    // $(".card_list li").draggable({
-    //     connectWith: ".connectedSortable li",
-    //     stop: function (event, ui) {
-    //         alert($(this).attr("id"));
-    //     }
-    // });
 });
