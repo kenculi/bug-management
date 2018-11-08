@@ -29,6 +29,16 @@ class BoardController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function updateStatus(Request $request)
+    {
+        Issue::where('id', $request->issue_id)->update(['issue_status' => $request->status]);
+        return response()->json(['success'=>'Data is successfully added']);
+    }
+
+    /**
      * Update the specified resource in storage.
      * @param  Request $request
      * @return Response
