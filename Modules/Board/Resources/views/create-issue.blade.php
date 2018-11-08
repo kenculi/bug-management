@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            <label for="priorityId">Project <span class="requiredStar"></span></label>
+            <label for="priorityId">Priority <span class="requiredStar"></span></label>
             <select class="form-control" name="priorityId" id="priorityId">
                 @foreach($priorities as $priority)
                     <option value="{{ $priority->id }}">{{ $priority->name }}</option>
@@ -53,11 +53,12 @@
         <div class="form-group">
             <label class="control-label">Due date</label>
                 <input type="text" name="dueDate" class="form-control" value="{{ old('dueDate') }}" placeholder="Due date">
-                <span>(DD/MM/YYYY)</span>
+                <span>(DD-MM-YYYY)</span>
         </div>
         <div class="form-group">
             <label for="linkedIssueType">Linked issues</label>
             <select class="form-control" name="linkedIssueType" id="linkedIssueType">
+                <option value="0">-------</option>
                 @foreach($linkedIssueTypes as $linkedIssueType)
                     <option value="{{ $linkedIssueType->id }}">{{ $linkedIssueType->link_name }}</option>
                 @endforeach
@@ -67,6 +68,7 @@
         <div class="form-group">
             <label for="issueId">Issue</label>
             <select class="form-control" name="issueId" id="issueId">
+                <option value="0">-------</option>
                 @foreach($issues as $issue)
                     <option value="{{ $issue->id }}">{{ $issue->summary }}</option>
                 @endforeach
@@ -76,6 +78,7 @@
         <div class="form-group">
             <label for="assignee">Assignee</label>
             <select class="form-control" name="assignee" id="assignee">
+                <option value="0">No one</option>
                 @foreach($assignees as $assignee)
                     <option value="{{ $assignee->userinvited->id }}">{{ $assignee->userinvited->full_name }}</option>
                 @endforeach

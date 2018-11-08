@@ -5,11 +5,15 @@ namespace Modules\Board\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Issue;
 use App\IssueStatus;
 use App\Project;
 use App\Priority;
 use App\IssueLinkType;
+use App\IssueLink;
 use App\Invite;
 
 class BoardController extends Controller
@@ -50,6 +54,57 @@ class BoardController extends Controller
         $linkedIssueTypes = IssueLinkType::getAllLinkType(['id', 'link_name']);
         $issues = Issue::where('proj_id', 1)->get();
         $assignees = Invite::getAllByProject(1);
+
+        if ($request->isMethod('post')) {
+            $params = $request->all();
+            $validator = Validator::make($params, [
+                'projectId' => 'required|numeric',
+                'summary' => 'required|string|max:255',
+                'priorityId' => 'required|numeric',
+                'linkedIssueType' => 'numeric',
+                'issueId' => 'numeric',
+                'dueDate' => 'date_format:"d-m-Y"',
+                'assignee' => 'numeric',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+
+            $insertIssue = [
+                "proj_id"       => (int)$params['projectId'],
+                "reporter"      => Auth::id(),
+                "summary"       => htmlentities(trim($params['summary'])),
+                "priority_id"   => (int)$params['priorityId'],
+                "issue_status"  => IssueStatus::getFirstStatusByProjectID($params['projectId'])
+            ];
+
+            if (!empty($params['assignee'])) {
+                $insertIssue['assignee'] = (int)$params['assignee'];
+            }
+            if (!empty($params['linkedIssueType']) && !$params['issueId']) {
+                return redirect()->back()->withInput()->withErrors(['issueId'=> 'Must be chose with Issue link type']);
+            }
+            if (!$params['linkedIssueType'] && !empty($params['issueId'])) {
+                return redirect()->back()->withInput()->withErrors(['linkedIssueType'=> 'Must be chose with Issue']);
+            }
+
+            if (!empty($params['linkedIssueType']) && !empty($params['issueId'])) {
+                $insertedIssueLinkId = IssueLink::create([
+                    'link_type_id'  => (int)$params['linkedIssueType'],
+                    'issue_id'      => (int)$params['issueId']
+                ]);
+                $insertIssue['issue_link'] = (int)$insertedIssueLinkId->id;
+            }
+            if (!empty($params['dueDate'])) {
+                $insertIssue['due_date'] = Carbon::parse(trim($params['dueDate']))->format("Y-m-d H:i:s");
+            }
+
+            Issue::create($insertIssue);
+            $request->flash();
+            return redirect("/board?proj_id=" . (int)$params['projectId']);
+        }
 
         return view('board::create-issue')
             ->with('projects', $projects)

@@ -3,7 +3,7 @@ $(function() {
         connectWith: ".column",
         handle: ".box-header",
         placeholder: "box-placeholder ui-corner-all"
-    });
+    }).disableSelection();
 
     $(".box")
         .addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")

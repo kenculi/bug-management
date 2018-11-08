@@ -20,7 +20,7 @@ class Invite extends Model
     public static function getAllByProject($projectId = 0)
 	{
 		$result = self::select()
-			->where("proj_id", $projectId)
+			->where("proj_id", (int)$projectId)
 			->where("type", 2)
 			->get();
 		return $result;
