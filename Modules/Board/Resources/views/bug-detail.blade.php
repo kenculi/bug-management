@@ -23,7 +23,7 @@
         <span class="projTitle">Bug ID</span>
     </h4>
 </div>
-<div class="box-body form-scrolling">
+<div class="box-body form-scrolling bug-detail">
     <div class="row">
         <div class="col-md-7 col-xs-7">
             <h3>Bug title</h3>

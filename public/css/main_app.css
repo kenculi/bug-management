@@ -12,3 +12,8 @@
 .modal-footer {
 	text-align: center;
 }
+
+.requiredStar::before {
+  	color: red;
+  	content: "*";
+}

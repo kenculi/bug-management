@@ -13,12 +13,22 @@
 
 html {
     overflow: hidden;
+    height: initial !important;
+    min-height: initial !important;
+}
+
+body {
+    height: initial !important;
+    min-height: initial !important;
 }
 
 .form-scrolling {
-    height: 400px;
+    height: auto;
     overflow-y: auto;
     overflow-x: hidden;
+}
+.form-scrolling.bug-detail {
+    height: 400px;
 }
 
 .form-scrolling::-moz-selection {
