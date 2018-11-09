@@ -37,6 +37,11 @@ class BoardController extends Controller
         return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_statuss' => $issue_status]);
     }
 
+    public function closeIframe()
+    {
+        return view('board::close-iframe');
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -54,7 +59,10 @@ class BoardController extends Controller
      */
     public function bugDetail(Request $request)
     {
-        return view('board::bug-detail');
+        $id = (int)$request->route('id');
+        $findBug = Issue::find($id);
+        return view('board::bug-detail')
+            ->with("bugDetail", $findBug);
     }
 
     public function createIssue(Request $request)
@@ -73,7 +81,6 @@ class BoardController extends Controller
                 'priorityId' => 'required|numeric',
                 'linkedIssueType' => 'numeric',
                 'issueId' => 'numeric',
-                'dueDate' => 'date_format:"d-m-Y"',
                 'assignee' => 'numeric',
             ]);
             if ($validator->fails()) {
@@ -113,7 +120,8 @@ class BoardController extends Controller
 
             Issue::create($insertIssue);
             $request->flash();
-            return redirect("/board?proj_id=" . (int)$params['projectId']);
+            \Session::flash('success', 'Issue was created!');
+            return view('board::close-iframe')->with('message','');
         }
 
         return view('board::create-issue')

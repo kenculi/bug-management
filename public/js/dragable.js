@@ -19,11 +19,10 @@ $(function() {
             var status = ui.item.parent().attr('data-target');
             jQuery.ajax({
               method: "POST",
-              url: "board/update-status",
-              data: { issue_id: issue_id, status: status }
+              url: "/board/update-status",
+              data: { "issue_id": issue_id, "status": status, "_token": TOKEN }
             })
             .done(function( msg ) {
-                alert( "OK");
             });
         }
     }).disableSelection();

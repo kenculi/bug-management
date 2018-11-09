@@ -86,6 +86,12 @@
     </div>
 @stop
 
+@section('script')
+<script type="text/javascript">
+    var TOKEN = "{{ csrf_token() }}";
+</script>
+@stop
+
 @section('jsloader')
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -25,8 +25,9 @@
 </div>
 <div class="box-body form-scrolling bug-detail">
     <div class="row">
+        @if (!empty($bugDetail))
         <div class="col-md-7 col-xs-7">
-            <h3>Bug title</h3>
+            <h3>{{ $bugDetail->summary }}</h3>
             <p>
                 <button class="btn btn-sm btn-default"><i class="glyphicon glyphicon-paperclip"></i></button>
                 <button class="btn btn-sm btn-default"><i class="fa fa-clone"></i></button>
@@ -111,6 +112,9 @@
                 <p>Updated 32 minutes ago</p>
             </div>
         </div>
+        @else
+            <h3>Have no information for this issue or this issue id is not exist</h3>
+        @endif
     </div>
 </div>
 @stop
