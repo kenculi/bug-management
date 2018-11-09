@@ -27,6 +27,12 @@
 </style>
 @stop
 
+@section('breadcrumb')
+<div class="breadcrumb">
+    <a href="{{ url('/board/create-issue') }}" class="modal-trigger" data-url="{{ url('/board/create-issue') }}"><button type="button" class="btn btn-block btn-success btn-sm">Create issue</button></a>
+</div>
+@stop
+
 @section('content')
     <div id='my-modal' class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg" role="document">
@@ -65,10 +71,10 @@
                     <ul id="card_list_{!! $issue_status->id !!}" data-target="{!! $issue_status->id !!}" class="connectedSortable todo-list card_list">
                         @foreach ($issues as $issue)
                             @if ($issue->issue_status == $issue_status->id)
-                                <li id={!! $issue->id !!}><a href="{{ url('/board/bug-detail/'.$issue->id)}}" class="modal-trigger" data-url="{{ url('/board/bug-detail/' .$issue->id) }}">{!! $issue->summary !!}</a></li>
+                                <li id="{!! $issue->id !!}"><a href="{{ url('/board/bug-detail/'.$issue->id) }}" class="modal-trigger" data-url="{{ url('/board/bug-detail/' .$issue->id) }}">{!! $issue->summary !!}</a></li>
                             @endif
                         @endforeach
-                        <li> <a href="">Link tạo issue</a></li>
+                        {{-- <li> <a href="">Link tạo issue</a></li> --}}
                     </ul>
                 </div>
     		</div>

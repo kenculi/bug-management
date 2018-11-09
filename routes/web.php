@@ -18,4 +18,4 @@ Route::get('/', function () {
 Route::get('logout', 'Auth\LoginController@logout');
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'BacklogController@index');
