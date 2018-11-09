@@ -10,9 +10,21 @@ $(function() {
         .find(".box-header")
             .addClass("ui-widget-header ui-corner-all");
 
-    // $( "#card_list_1, #card_list_2, #card_list_3, #card_list_4" ).sortable({
     $( ".card_list" ).sortable({
-        connectWith: ".connectedSortable"
-
+        items: 'li',
+        revert: true,
+        connectWith: ".connectedSortable",
+        stop: function (event, ui) {
+            var issue_id = ui.item.attr('id');
+            var status = ui.item.parent().attr('data-target');
+            jQuery.ajax({
+              method: "POST",
+              url: "board/update-status",
+              data: { issue_id: issue_id, status: status }
+            })
+            .done(function( msg ) {
+                alert( "OK");
+            });
+        }
     }).disableSelection();
 });

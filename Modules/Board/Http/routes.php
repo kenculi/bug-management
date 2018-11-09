@@ -4,7 +4,8 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
 {
     Route::get('/', 'BoardController@index');
     Route::get('/bug-detail/{id}', 'BoardController@bugDetail')->where('id', '[0-9]+');
-
+    Route::post('/update-status', 'BoardController@updateStatus');
+  
     Route::get('/create-issue', 'BoardController@createIssue');
     Route::post('/create-issue', 'BoardController@createIssue');
 });
