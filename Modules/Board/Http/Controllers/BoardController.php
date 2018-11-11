@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Issue;
 use App\IssueStatus;
 use App\Project;
@@ -15,6 +16,7 @@ use App\Priority;
 use App\IssueLinkType;
 use App\IssueLink;
 use App\Invite;
+use App\Label;
 
 class BoardController extends Controller
 {
@@ -30,7 +32,7 @@ class BoardController extends Controller
 
         $project_name = !empty($project->name) ? $project->name : "Unknow";
 
-        $issue_status = IssueStatus::where('proj_id', $projectId)->orWhere('proj_id', null)->get();
+        $issue_status = IssueStatus::getStatusByProjectID($projectId);
 
         $issues = Issue::where('proj_id', $projectId)->get();
 
@@ -61,8 +63,29 @@ class BoardController extends Controller
     {
         $id = (int)$request->route('id');
         $findBug = Issue::find($id);
+        $issueStatus = IssueStatus::getStatusByProjectID(1);
+        $reporter = User::getUserInfo($findBug->reporter);
+        $assignees = Invite::getAllByProject(1);
+        $firstLetter = Project::getFirstLetterName(1);
+        $priorities = Priority::getAllPriority(['id', 'name']);
+        $labels = Label::getAllLabel("*");
+
+        $currentTime = Carbon::now();
+        $createdAt = Carbon::createFromFormat('Y-m-d H:i:s', $findBug->created_at);
+        $updatedAt = Carbon::createFromFormat('Y-m-d H:i:s', $findBug->updated_at);
+        $createdTemp = $createdAt->diffForHumans($currentTime);
+        $updatedTemp = $updatedAt->diffForHumans($currentTime);
+
         return view('board::bug-detail')
-            ->with("bugDetail", $findBug);
+            ->with("bugDetail", $findBug)
+            ->with("firstLetter", $firstLetter)
+            ->with("reporter", $reporter)
+            ->with("assignees", $assignees)
+            ->with("priorities", $priorities)
+            ->with("labels", $labels)
+            ->with("createdTemp", $createdTemp)
+            ->with("updatedTemp", $updatedTemp)
+            ->with("issueStatus", $issueStatus);
     }
 
     public function createIssue(Request $request)

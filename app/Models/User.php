@@ -26,4 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function getUserInfo($userId = 0)
+    {
+        $result = self::select()
+            ->where("id", (int)$userId)
+            ->first();
+        return $result;
+    }
 }

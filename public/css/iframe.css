@@ -54,3 +54,7 @@ body {
 .padding-right-10 {
     padding-right: 10px;
 }
+
+textarea {
+  resize:vertical;
+}

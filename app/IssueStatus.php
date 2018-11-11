@@ -17,4 +17,13 @@ class IssueStatus extends Model
 			->first();
 		return $result->id;
 	}
+
+	public static function getStatusByProjectID($projectId = 0)
+	{
+		$result = self::select()
+			->where("proj_id", (int)$projectId)
+			->orderBy("sequence", "ASC")
+			->get();
+		return $result;
+	}
 }
