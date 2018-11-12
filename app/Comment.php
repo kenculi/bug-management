@@ -8,6 +8,7 @@ class Comment extends Model
 {
     const TABLE_NAME  = 'comment';
     const PRIMARY_KEY = 'id';
+    protected $guarded =[];
 
     protected $table      = self::TABLE_NAME;
     protected $primaryKey = self::PRIMARY_KEY;

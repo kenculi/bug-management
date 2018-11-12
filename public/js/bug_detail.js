@@ -12,14 +12,16 @@ $('#txtComment').on("click", function() {
 });
 
 function updateDesc(issueId) {
-	// var TOKEN = $('input[name="_token"]').val();
 	var desc = $("#txtDesc").val();
 	$.ajax({
         type: "POST",
         data: { "issueId": issueId, "description": desc, "_token": TOKEN },
         url: "/board/update-desc",
         success: function(response) {
-
+        	if (!response['error']) {
+        		document.getElementById("descActions").innerHTML = "";
+        		toastr["success"]('Description was updated');
+        	}
         }
     });
 }
@@ -31,7 +33,10 @@ function addComment(issueId) {
         data: { "issueId": issueId, "comment": comment, "_token": TOKEN },
         url: "/board/add-comment",
         success: function(response) {
-
+        	if (!response['error']) {
+        		document.getElementById("commentActions").innerHTML = "";
+        		toastr["success"]('Comment was added');
+        	}
         }
     });
 }

@@ -36,7 +36,7 @@
                 <button class="btn btn-sm btn-default" title="More"><i class="fa fa-ellipsis-h"></i></button>
             </p>
             <div>
-                <textarea id="txtDesc" class="form-control" placeholder="Add a description..."></textarea>
+                <textarea id="txtDesc" class="form-control" placeholder="Add a description...">{{ $bugDetail->description }}</textarea>
                 <div id="descActions"></div>
             </div>
             <div class="form-group">
@@ -60,6 +60,21 @@
                         <textarea id="txtComment" class="form-control" placeholder="Add a comment..."></textarea>
                         <div id="commentActions"></div>
                     </div>
+                </div>
+            </div>
+            <div class="chat" id="box-comment">
+                <div class="item">
+                    <img src="/images/icons_user.svg" alt="user image" class="img-circle">
+
+                    <p class="message">
+                        <a href="#" class="name">
+                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+                            Mike Doe
+                        </a>
+                         would like to meet you to discuss the latest news about
+                        the arrival of the new theme. They say it is going to be one the
+                        best themes on the market
+                    </p>
                 </div>
             </div>
         </div>

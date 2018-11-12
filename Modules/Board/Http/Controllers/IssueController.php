@@ -26,13 +26,14 @@ class IssueController extends Controller
 		if ($request->isMethod('post') && Auth::check()) {
 			$params = $request->all();
 			$insertComment = [
-                "proj_id"       => (int)$params['projectId'],
                 "user_id"      	=> Auth::id(),
+                "proj_id"       => 1,
                 "issue_id"      => (int)$params['issueId'],
-                "comment"   => htmlentities(trim($params['comment']))
+                "description"   => htmlentities(trim($params['comment']))
             ];
 
             Comment::create($insertComment);
+            return response()->json(['error' => 0]);
 		}
 	}
 
@@ -46,7 +47,7 @@ class IssueController extends Controller
 				$findIssue->description = htmlentities(trim($params['description']));
             	$findIssue->save();
 			}
-
+			return response()->json(['error' => 0]);
 		}
 	}
 
