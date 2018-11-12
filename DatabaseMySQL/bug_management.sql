@@ -439,10 +439,11 @@ CREATE TABLE `issuestatus` (
 --
 
 INSERT INTO `issuestatus` (`id`, `sequence`, `name`, `description`, `proj_id`, `icon_url`) VALUES
-(1, 1, 'Khởi tạo', '', NULL, '/images/icons/statuses/open.png'),
-(2, 2, 'Thực thi', NULL, NULL, '/images/icons/status_generic.gif'),
-(3, 3, 'Kiểm tra', NULL, NULL, '/images/icons/status_generic.gif'),
-(4, 4, 'Hoàn thành', '', NULL, '/images/icons/statuses/inprogress.png'),
+(1, 1, 'Khởi tạo', '', 1, '/images/icons/statuses/open.png'),
+(2, 2, 'Thực thi', NULL, 1, '/images/icons/status_generic.gif'),
+(3, 3, 'Kiểm tra', NULL, 1, '/images/icons/status_generic.gif'),
+(4, 4, 'Hoàn thành', '', 1
+  , '/images/icons/statuses/inprogress.png'),
 (5, 5, 'Reopened', '', 0, '/images/icons/statuses/reopened.png'),
 (6, 6, 'Resolved', '', 0, '/images/icons/statuses/resolved.png'),
 (7, 7, 'Closed', '', 0, '/images/icons/statuses/closed.png');
@@ -594,7 +595,7 @@ INSERT INTO `resolution` (`id`, `sequence`, `name`, `description`, `icon_url`) V
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` smallint(2) DEFAULT '1',
   `nation` smallint(3) NOT NULL,

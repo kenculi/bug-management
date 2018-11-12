@@ -29,7 +29,7 @@ class IssueController extends Controller
                 "proj_id"       => (int)$params['projectId'],
                 "user_id"      	=> Auth::id(),
                 "issue_id"      => (int)$params['issueId'],
-                "description"   => htmlentities(trim($params['description']))
+                "comment"   => htmlentities(trim($params['comment']))
             ];
 
             Comment::create($insertComment);

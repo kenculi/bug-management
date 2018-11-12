@@ -37,7 +37,7 @@
             </p>
             <div>
                 <textarea id="txtDesc" class="form-control" placeholder="Add a description..."></textarea>
-                <div id="commentActions"></div>
+                <div id="descActions"></div>
             </div>
             <div class="form-group">
                 <div class="row flex-display">
@@ -58,6 +58,7 @@
                     </div>
                     <div class="col-md-10 col-xs-10">
                         <textarea id="txtComment" class="form-control" placeholder="Add a comment..."></textarea>
+                        <div id="commentActions"></div>
                     </div>
                 </div>
             </div>
@@ -159,6 +160,7 @@
 @section('script')
     <script type="text/javascript">
         var issueId = "{{ $bugDetail->id }}";
+        var TOKEN = "{{ csrf_token() }}";
     </script>
     <script type="text/javascript" src="{{ asset('js/bug_detail.js') }}"></script>
 @stop
