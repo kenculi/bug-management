@@ -13,4 +13,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
     Route::post('/add-comment', 'IssueController@addComment');
 
     Route::get('/announce', 'BoardController@closeIframe');
+
+    Route::get('/create-status', 'IssueStatusController@createStatus');
+
 });

@@ -81,7 +81,9 @@
     	</div>
         @endforeach
     	<div class="col-md-1">
-    		<button type="button" class="btn btn-default btn-md" title="Create column"> + </button>
+            <a href="{{ url('/board/create-status') }}" class="modal-trigger" data-url="{{ url('/board/create-status') }}">
+    		  <button type="button" class="btn btn-default btn-md" title="Create column"> + </button>
+            </a>
     	</div>
     </div>
 @stop
