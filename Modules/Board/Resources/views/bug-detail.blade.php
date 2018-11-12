@@ -24,6 +24,7 @@
     </h4>
 </div>
 <div class="box-body form-scrolling bug-detail">
+    {{ csrf_field() }}
     <div class="row">
         @if (!empty($bugDetail))
         <div class="col-md-7 col-xs-7">
@@ -35,7 +36,8 @@
                 <button class="btn btn-sm btn-default" title="More"><i class="fa fa-ellipsis-h"></i></button>
             </p>
             <div>
-                <textarea class="form-control" placeholder="Add a description..."></textarea>
+                <textarea id="txtDesc" class="form-control" placeholder="Add a description..."></textarea>
+                <div id="commentActions"></div>
             </div>
             <div class="form-group">
                 <div class="row flex-display">
@@ -55,7 +57,7 @@
                         <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
                     </div>
                     <div class="col-md-10 col-xs-10">
-                        <textarea class="form-control" placeholder="Add a comment..."></textarea>
+                        <textarea id="txtComment" class="form-control" placeholder="Add a comment..."></textarea>
                     </div>
                 </div>
             </div>
@@ -153,4 +155,10 @@
         @endif
     </div>
 </div>
+@stop
+@section('script')
+    <script type="text/javascript">
+        var issueId = "{{ $bugDetail->id }}";
+    </script>
+    <script type="text/javascript" src="{{ asset('js/bug_detail.js') }}"></script>
 @stop
