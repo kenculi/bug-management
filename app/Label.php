@@ -8,7 +8,8 @@ class Label extends Model
 {
     const TABLE_NAME  = 'label';
     const PRIMARY_KEY = 'id';
-
+    protected $guarded =[];
+    public $timestamps = false;
     protected $table      = self::TABLE_NAME;
     protected $primaryKey = self::PRIMARY_KEY;
 

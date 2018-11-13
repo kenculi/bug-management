@@ -21,6 +21,10 @@
     #historyBox {
         display: none;
     }
+    .removeBolderText {
+        font-family: initial;
+        font-weight: initial;
+    }
 </style>
 @stop
 @section('content')
@@ -55,11 +59,6 @@
                             <option value="1">Comments</option>
                             <option value="2">History</option>
                         </select>
-                        {{-- <span class="dropdown-toggle" data-toggle="dropdown">Comments
-                        <span class="fa fa-caret-down"></span></span>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item"><a href="#">History</a></li>
-                        </ul> --}}
                     </div>
                 </div>
             </div>
@@ -88,7 +87,22 @@
                 </div>
             </div>
             <div id="historyBox">
-                <h3>History</h3>
+                @if (!empty($history))
+                <div class="chat">
+                    @foreach($history as $value)
+                    <div class="item">
+                        <img src="/images/icons_user.svg" alt="user image" class="img-circle">
+                        <p class="message">
+                            <span href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{ $value->created_at }}</small>
+                                <a>{{ $value->userloged->full_name }}</a> <span class="removeBolderText">đã thay đổi</span> {{ $value->getUpdatedField() }}
+                            </span>
+                            {{ $value->note }}
+                        </p>
+                    </div>
+                    @endforeach
+                </div>
+                @endif
             </div>
         </div>
         <div class="col-md-5 col-xs-5">
@@ -141,14 +155,16 @@
                 </dd>
                 <dt>Nhãn</dt>
                 <dd>
-                    <select class="form-control" name="priorityId" id="priorityId">
-                    @foreach($labels as $label)
-                    @php
-                        $selected = $bugDetail->label == $label->id ? "selected" : "";
-                    @endphp
-                        <option {{ $selected }} value="{{ $label->id }}">{{ $label->name }}</option>
-                    @endforeach
+                    <select class="form-control select2" id="label" name="labels" multiple="multiple" data-placeholder="Nhãn">
+                        @foreach($labels as $label)
+                        @php
+                            $arrLabelIds = explode(",", $bugDetail->label);
+                            $selected = in_array($label->id, $arrLabelIds) ? "selected" : "";
+                        @endphp
+                            <option {{ $selected }} value="{{ $label->id }}">{{ $label->label }}</option>
+                        @endforeach
                     </select>
+                    <div id="labelActions"></div>
                 </dd>
                 <dt>Ưu tiên</dt>
                 <dd>

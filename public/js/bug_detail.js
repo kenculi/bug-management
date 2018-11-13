@@ -1,6 +1,18 @@
+$(".select2").select2({
+   	tags: true,
+    multiple: true,
+    tokenSeparators: [',', ' '],
+});
+
 $('#txtDesc').on("click", function() {
 	if ($("#descActions").is(':empty')) {
 		$("#descActions").append('<button type="button" class="btn btn-default btn-xs" onclick="updateDesc(' + issueId + ')"><i class="glyphicon glyphicon-ok"></i></button> <button type="button" class="btn btn-default btn-xs" onclick="cancelUpdate(this)"><i class="glyphicon glyphicon-remove"></i></button>');
+	}
+});
+
+$('#label').on("change", function() {
+	if ($("#labelActions").is(':empty')) {
+		$("#labelActions").append('<button type="button" class="btn btn-default btn-xs" onclick="updateLabel(' + issueId + ')"><i class="glyphicon glyphicon-ok"></i></button> <button type="button" class="btn btn-default btn-xs" onclick="cancelUpdate(this)"><i class="glyphicon glyphicon-remove"></i></button>');
 	}
 });
 
@@ -19,7 +31,7 @@ function updateDesc(issueId) {
         success: function(response) {
         	if (!response['error']) {
         		document.getElementById("descActions").innerHTML = "";
-        		toastr["success"]('Description was updated');
+        		toastr["success"]('Cập nhật mô tả thành công');
         	}
         }
     });
@@ -48,7 +60,7 @@ function updateStatus(object) {
         url: "/board/update-status",
         success: function(response) {
             if (!response['error']) {
-                toastr["success"]('Status was updated');
+                toastr["success"]('Cập nhật trạng thái thành công');
             }
         }
     });
@@ -62,7 +74,7 @@ function updateAssignee(object) {
         url: "/board/update-assignee",
         success: function(response) {
             if (!response['error']) {
-                toastr["success"]('Assignee was changed');
+                toastr["success"]('Cập nhật người thực hiện thành công');
             }
         }
     });
@@ -76,8 +88,25 @@ function updatePriority(object) {
         url: "/board/update-priority",
         success: function(response) {
             if (!response['error']) {
-                toastr["success"]('Priority was updated');
+                toastr["success"]('Cập nhật ưu tiên thành công');
             }
+        }
+    });
+}
+
+function updateLabel(object) {
+    var labels = $("select[name='labels']").val();
+    $.ajax({
+        type: "POST",
+        data: { "issueId": issueId, "labels": labels, "_token": TOKEN },
+        url: "/board/update-label",
+        success: function(response) {
+            if (!response['error']) {
+                toastr["success"]('Cập nhật nhãn thành công');
+            } else {
+            	toastr["error"](response['message']);
+            }
+            document.getElementById("labelActions").innerHTML = "";
         }
     });
 }

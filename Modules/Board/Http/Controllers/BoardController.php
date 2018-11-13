@@ -18,6 +18,7 @@ use App\IssueLink;
 use App\Invite;
 use App\Label;
 use App\Comment;
+use App\ActivitiesLog;
 
 class BoardController extends Controller
 {
@@ -71,6 +72,7 @@ class BoardController extends Controller
         $priorities = Priority::getAllPriority(['id', 'name']);
         $labels = Label::getAllLabel("*");
         $comments = Comment::getAllByIssue($id);
+        $history = ActivitiesLog::getAllByIssue($id);
 
         $currentTime = Carbon::now();
         $createdAt = Carbon::createFromFormat('Y-m-d H:i:s', $findBug->created_at);
@@ -88,6 +90,7 @@ class BoardController extends Controller
             ->with("createdTemp", $createdTemp)
             ->with("updatedTemp", $updatedTemp)
             ->with("comments", $comments)
+            ->with("history", $history)
             ->with("issueStatus", $issueStatus);
     }
 

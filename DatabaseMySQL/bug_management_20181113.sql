@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 13, 2018 lúc 06:13 PM
--- Phiên bản máy phục vụ: 10.3.9-MariaDB
--- Phiên bản PHP: 7.1.22
+-- Host: localhost
+-- Generation Time: Nov 08, 2018 at 04:11 PM
+-- Server version: 5.7.24-0ubuntu0.16.04.1
+-- PHP Version: 5.5.38-1+deb.sury.org~xenial+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,82 +17,39 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `bug_management`
+-- Database: `bug_management`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `activities_log`
+-- Table structure for table `comment`
 --
 
-DROP TABLE IF EXISTS `activities_log`;
-CREATE TABLE IF NOT EXISTS `activities_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` tinyint(1) NOT NULL COMMENT '1: project; 2: issue',
-  `field` tinyint(2) NOT NULL COMMENT '1: summary; 2: desc; 3: status; 4: assignee; 5: label; 6: priority; 7: attachment; 8: clone issue; 9: delete issue',
-  `issue_id` int(11) DEFAULT NULL,
-  `project_id` int(11) NOT NULL,
-  `user_id` int(10) NOT NULL,
-  `note` text COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `activities_log`
---
-
-INSERT INTO `activities_log` (`id`, `type`, `field`, `issue_id`, `project_id`, `user_id`, `note`, `created_at`) VALUES
-(1, 2, 1, 1, 1, 2, 'A -> B', '2018-11-13 18:07:38');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `comment`
---
-
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE IF NOT EXISTS `comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `proj_id` int(11) NOT NULL,
   `issue_id` int(11) NOT NULL,
   `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `comment`
---
-
-INSERT INTO `comment` (`id`, `user_id`, `proj_id`, `issue_id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 1, 'thử', '2018-11-12 18:14:26', '2018-11-12 18:14:26'),
-(2, 2, 1, 1, 'kh&ocirc;ng', '2018-11-12 18:16:01', '2018-11-12 18:16:01'),
-(3, 2, 1, 1, 'h&uacute;', '2018-11-12 18:16:30', '2018-11-12 18:16:30'),
-(4, 2, 1, 1, 'h&uacute; e', '2018-11-12 18:17:28', '2018-11-12 18:17:28'),
-(5, 2, 1, 1, 'n&egrave; pa', '2018-11-12 18:17:56', '2018-11-12 18:17:56'),
-(6, 2, 1, 1, 'hử', '2018-11-12 18:19:15', '2018-11-12 18:19:15');
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `country`
+-- Table structure for table `country`
 --
 
-DROP TABLE IF EXISTS `country`;
-CREATE TABLE IF NOT EXISTS `country` (
-  `id` smallint(3) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `country` (
+  `id` smallint(3) NOT NULL,
   `cc_iso` varchar(2) COLLATE utf8_bin DEFAULT NULL,
-  `country_name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_cc_iso` (`cc_iso`)
-) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `country_name` varchar(100) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Đang đổ dữ liệu cho bảng `country`
+-- Dumping data for table `country`
 --
 
 INSERT INTO `country` (`id`, `cc_iso`, `country_name`) VALUES
@@ -371,23 +326,21 @@ INSERT INTO `country` (`id`, `cc_iso`, `country_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `invite`
+-- Table structure for table `invite`
 --
 
-DROP TABLE IF EXISTS `invite`;
-CREATE TABLE IF NOT EXISTS `invite` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `invite` (
+  `id` int(11) NOT NULL,
   `proj_id` int(11) NOT NULL,
   `user_send_id` int(11) NOT NULL,
   `user_receive_id` int(11) NOT NULL,
-  `type` int(11) NOT NULL DEFAULT 1 COMMENT '1:Đã mời        2:Đã chấp nhận      3:Từ chối',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '1:Đã mời        2:Đã chấp nhận      3:Từ chối',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `invite`
+-- Dumping data for table `invite`
 --
 
 INSERT INTO `invite` (`id`, `proj_id`, `user_send_id`, `user_receive_id`, `type`, `created_at`, `updated_at`) VALUES
@@ -397,12 +350,11 @@ INSERT INTO `invite` (`id`, `proj_id`, `user_send_id`, `user_receive_id`, `type`
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `issue`
+-- Table structure for table `issue`
 --
 
-DROP TABLE IF EXISTS `issue`;
-CREATE TABLE IF NOT EXISTS `issue` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `issue` (
+  `id` int(11) NOT NULL,
   `proj_id` int(11) NOT NULL,
   `reporter` int(11) NOT NULL,
   `assignee` int(11) DEFAULT NULL,
@@ -411,69 +363,53 @@ CREATE TABLE IF NOT EXISTS `issue` (
   `issue_type` int(11) DEFAULT NULL,
   `issue_link` int(11) DEFAULT NULL,
   `attachment` varchar(255) DEFAULT NULL,
-  `due_date` timestamp NULL DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `due_date` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `description` text,
   `priority_id` int(11) DEFAULT NULL,
-  `label` varchar(200) DEFAULT NULL,
+  `label` int(11) DEFAULT NULL,
   `original_estimate` int(11) DEFAULT NULL,
   `remaining_estimate` int(11) DEFAULT NULL,
   `resolution_id` smallint(3) DEFAULT NULL,
   `country_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `issue`
+-- Dumping data for table `issue`
 --
 
 INSERT INTO `issue` (`id`, `proj_id`, `reporter`, `assignee`, `summary`, `issue_status`, `issue_type`, `issue_link`, `attachment`, `due_date`, `description`, `priority_id`, `label`, `original_estimate`, `remaining_estimate`, `resolution_id`, `country_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 'Yes', 3, 1, 1, '1', '2018-11-13 14:15:32', 'vượng đang học', 1, '1', 1, 1, 1, 1, '2018-11-13 14:05:40', '2018-11-13 18:13:06'),
-(2, 1, 1, 1, 'No', 3, 1, 1, '1', '2018-11-10 16:35:13', '1', 1, '1', 1, 1, 1, 1, '2018-11-09 13:07:56', '2018-11-10 16:35:13'),
-(3, 1, 2, NULL, 'vượng', 1, NULL, 4, NULL, '2018-11-13 15:46:18', 'vượng đang l&agrave;m', 2, '1,2,3', NULL, NULL, NULL, NULL, '2018-11-12 17:23:18', '2018-11-13 17:07:44');
+(1, 1, 1, 1, 'Yes', 1, 1, 1, '1', '2018-11-07 15:20:12', '1', 1, 1, 1, 1, 1, 1, '2018-11-07 15:20:12', '2018-11-07 15:20:12'),
+(2, 1, 1, 1, 'No', 2, 1, 1, '1', '2018-11-07 15:20:08', '1', 1, 1, 1, 1, 1, 1, '2018-11-07 15:20:08', '2018-11-07 15:20:08');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `issuelink`
+-- Table structure for table `issuelink`
 --
 
-DROP TABLE IF EXISTS `issuelink`;
-CREATE TABLE IF NOT EXISTS `issuelink` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `issuelink` (
+  `id` int(11) NOT NULL,
   `link_type_id` int(11) NOT NULL,
-  `issue_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `issuelink`
---
-
-INSERT INTO `issuelink` (`id`, `link_type_id`, `issue_id`) VALUES
-(1, 2, 1),
-(2, 2, 1),
-(3, 2, 1),
-(4, 2, 1);
+  `issue_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `issuelinktype`
+-- Table structure for table `issuelinktype`
 --
 
-DROP TABLE IF EXISTS `issuelinktype`;
-CREATE TABLE IF NOT EXISTS `issuelinktype` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `issuelinktype` (
+  `id` int(11) NOT NULL,
   `link_name` varchar(255) NOT NULL,
   `inward` varchar(255) DEFAULT NULL,
-  `outward` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `outward` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `issuelinktype`
+-- Dumping data for table `issuelinktype`
 --
 
 INSERT INTO `issuelinktype` (`id`, `link_name`, `inward`, `outward`) VALUES
@@ -486,29 +422,28 @@ INSERT INTO `issuelinktype` (`id`, `link_name`, `inward`, `outward`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `issuestatus`
+-- Table structure for table `issuestatus`
 --
 
-DROP TABLE IF EXISTS `issuestatus`;
-CREATE TABLE IF NOT EXISTS `issuestatus` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `issuestatus` (
+  `id` int(11) NOT NULL,
   `sequence` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `proj_id` int(11) DEFAULT NULL,
-  `icon_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  `icon_url` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `issuestatus`
+-- Dumping data for table `issuestatus`
 --
 
 INSERT INTO `issuestatus` (`id`, `sequence`, `name`, `description`, `proj_id`, `icon_url`) VALUES
 (1, 1, 'Khởi tạo', '', 1, '/images/icons/statuses/open.png'),
 (2, 2, 'Thực thi', NULL, 1, '/images/icons/status_generic.gif'),
 (3, 3, 'Kiểm tra', NULL, 1, '/images/icons/status_generic.gif'),
-(4, 4, 'Hoàn thành', '', 1, '/images/icons/statuses/inprogress.png'),
+(4, 4, 'Hoàn thành', '', 1
+  , '/images/icons/statuses/inprogress.png'),
 (5, 5, 'Reopened', '', 0, '/images/icons/statuses/reopened.png'),
 (6, 6, 'Resolved', '', 0, '/images/icons/statuses/resolved.png'),
 (7, 7, 'Closed', '', 0, '/images/icons/statuses/closed.png');
@@ -516,20 +451,18 @@ INSERT INTO `issuestatus` (`id`, `sequence`, `name`, `description`, `proj_id`, `
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `issuetype`
+-- Table structure for table `issuetype`
 --
 
-DROP TABLE IF EXISTS `issuetype`;
-CREATE TABLE IF NOT EXISTS `issuetype` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `issuetype` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `icon_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `description` text,
+  `icon_url` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `issuetype`
+-- Dumping data for table `issuetype`
 --
 
 INSERT INTO `issuetype` (`id`, `name`, `description`, `icon_url`) VALUES
@@ -541,42 +474,29 @@ INSERT INTO `issuetype` (`id`, `name`, `description`, `icon_url`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `label`
+-- Table structure for table `label`
 --
 
-DROP TABLE IF EXISTS `label`;
-CREATE TABLE IF NOT EXISTS `label` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `label` (
+  `id` int(11) NOT NULL,
   `proj_id` int(11) NOT NULL,
-  `label` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `label`
---
-
-INSERT INTO `label` (`id`, `proj_id`, `label`) VALUES
-(1, 1, 'ha'),
-(2, 1, 'kaka'),
-(3, 1, 'hihi');
+  `label` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `migrations`
+-- Table structure for table `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE IF NOT EXISTS `migrations` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -586,36 +506,32 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `password_resets`
+-- Table structure for table `password_resets`
 --
 
-DROP TABLE IF EXISTS `password_resets`;
-CREATE TABLE IF NOT EXISTS `password_resets` (
+CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  KEY `password_resets_email_index` (`email`)
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `priority`
+-- Table structure for table `priority`
 --
 
-DROP TABLE IF EXISTS `priority`;
-CREATE TABLE IF NOT EXISTS `priority` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `priority` (
+  `id` int(11) NOT NULL,
   `sequence` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `icon_url` varchar(255) DEFAULT NULL,
-  `status_color` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `status_color` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `priority`
+-- Dumping data for table `priority`
 --
 
 INSERT INTO `priority` (`id`, `sequence`, `name`, `description`, `icon_url`, `status_color`) VALUES
@@ -628,45 +544,41 @@ INSERT INTO `priority` (`id`, `sequence`, `name`, `description`, `icon_url`, `st
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `project`
+-- Table structure for table `project`
 --
 
-DROP TABLE IF EXISTS `project`;
-CREATE TABLE IF NOT EXISTS `project` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `p_key` varchar(50) DEFAULT NULL,
   `lead_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `project`
+-- Dumping data for table `project`
 --
 
 INSERT INTO `project` (`id`, `name`, `p_key`, `lead_id`, `created_at`, `updated_at`) VALUES
-(1, 'ABC DEF', 'ABC1', 1, '2018-11-11 15:56:00', '2018-11-11 15:56:00');
+(1, 'ABC', 'ABC1', 1, '2018-11-07 15:53:50', '2018-11-07 15:53:53');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `resolution`
+-- Table structure for table `resolution`
 --
 
-DROP TABLE IF EXISTS `resolution`;
-CREATE TABLE IF NOT EXISTS `resolution` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `resolution` (
+  `id` int(11) NOT NULL,
   `sequence` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `icon_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `description` text,
+  `icon_url` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Đang đổ dữ liệu cho bảng `resolution`
+-- Dumping data for table `resolution`
 --
 
 INSERT INTO `resolution` (`id`, `sequence`, `name`, `description`, `icon_url`) VALUES
@@ -677,34 +589,200 @@ INSERT INTO `resolution` (`id`, `sequence`, `name`, `description`, `icon_url`) V
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `users`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
   `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` smallint(2) DEFAULT 1,
+  `type` smallint(2) DEFAULT '1',
   `nation` smallint(3) NOT NULL,
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `type`, `nation`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Duy Vuong Dao', 'quan@quan.com', '$2y$10$e8IQiqFtWmbBP5R8vN0YGu225Ud9U5qoGlA91WCu//pJ/S/xws/iW', 1, 0, 'admin', 'BLm17SbX8k793PONbv18cLaC1x42ndEmLGN5h3BvfT62GL6wQ1Y3kD6lpTYY', '2018-11-01 00:38:53', '2018-11-01 00:38:53'),
 (2, 'Vượng Duy', 'duyvuongdao2@gmail.com', '$2y$10$QXpRqxWVskzVMCnN52E2euf3opeC22fSsbS8ZjfYJnohqTV.RRd9.', 1, 256, '', '63e7NaQL9Kx2qrsjz8OL6UbRIeURXD5t3705K19vFLeqZuBjfsBqs9Xy7iux', '2018-11-01 02:40:45', '2018-11-01 02:40:45');
-COMMIT;
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_cc_iso` (`cc_iso`);
+
+--
+-- Indexes for table `invite`
+--
+ALTER TABLE `invite`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `issue`
+--
+ALTER TABLE `issue`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `issuelink`
+--
+ALTER TABLE `issuelink`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `issuelinktype`
+--
+ALTER TABLE `issuelinktype`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `issuestatus`
+--
+ALTER TABLE `issuestatus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `issuetype`
+--
+ALTER TABLE `issuetype`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `label`
+--
+ALTER TABLE `label`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `priority`
+--
+ALTER TABLE `priority`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resolution`
+--
+ALTER TABLE `resolution`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+  MODIFY `id` smallint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+--
+-- AUTO_INCREMENT for table `invite`
+--
+ALTER TABLE `invite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `issue`
+--
+ALTER TABLE `issue`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `issuelink`
+--
+ALTER TABLE `issuelink`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `issuelinktype`
+--
+ALTER TABLE `issuelinktype`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `issuestatus`
+--
+ALTER TABLE `issuestatus`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `issuetype`
+--
+ALTER TABLE `issuetype`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `label`
+--
+ALTER TABLE `label`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `priority`
+--
+ALTER TABLE `priority`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `project`
+--
+ALTER TABLE `project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `resolution`
+--
+ALTER TABLE `resolution`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -62,7 +62,7 @@ class IssueController extends Controller
 				$findIssue->assignee = (int)$params['assignee'];
             	$findIssue->save();
 			}
-
+			return response()->json(['error' => 0]);
 		}
 	}
 
@@ -76,7 +76,7 @@ class IssueController extends Controller
 				$findIssue->issue_status = (int)$params['issueStatus'];
             	$findIssue->save();
 			}
-
+			return response()->json(['error' => 0]);
 		}
 	}
 
@@ -90,7 +90,34 @@ class IssueController extends Controller
 				$findIssue->priority_id = (int)$params['priorityId'];
             	$findIssue->save();
 			}
+			return response()->json(['error' => 0]);
+		}
+	}
 
+	public function updateLabel(Request $request)
+	{
+		if ($request->isMethod('post')) {
+			$params = $request->all();
+			$issueId = (int)$params['issueId'];
+			if (empty($params['labels'])) {
+				return response()->json(['error' => 1, 'message' => 'Không cập nhật được nhãn']);
+			}
+
+			$labelToInsert = [];
+			foreach ($params['labels'] as $value) {
+				$checkLabelExisted = Label::find($value);
+				if (empty($checkLabelExisted)) {
+					$inserted = Label::create(['proj_id' => 1, 'label' => trim($value)]);
+					$labelToInsert[] = $inserted->id;
+				} else {
+					$labelToInsert[] = $value;
+				}
+			};
+
+			if (!empty($labelToInsert)) {
+				Issue::where('id', $issueId)->update(['label'=>implode(",", $labelToInsert)]);
+			}
+			return response()->json(['error' => 0]);
 		}
 	}
 }
