@@ -21,7 +21,7 @@ class Comment extends Model
     public static function getAllByIssue($issueId = 0)
 	{
 		$result = self::select()
-			->where("id", (int)$issueId)
+			->where("issue_id", (int)$issueId)
 			->get();
 		return $result;
 	}

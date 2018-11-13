@@ -33,6 +33,7 @@ class IssueController extends Controller
             ];
 
             Comment::create($insertComment);
+            \Session::flash('success', 'Comment was added!');
             return response()->json(['error' => 0]);
 		}
 	}

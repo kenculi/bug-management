@@ -29,5 +29,24 @@
     <script type="text/javascript" src="{{ asset('js/modals.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/main_app.js') }}"></script>
     @yield('script')
+    <script>
+        @if (Session::has('error'))
+        toastr["error"]('{{ Session::get('error') }}');
+        @endif
+
+        @if (Session::has('warning'))
+        toastr["warning"]('{{ Session::get('warning') }}');
+        @endif
+
+        @if (Session::has('success'))
+        toastr["success"]('{{ Session::get('success') }}');
+        @endif
+
+        @php
+            Session::forget('error');
+            Session::forget('warning');
+            Session::forget('success');
+        @endphp
+    </script>
 </body>
 </html>

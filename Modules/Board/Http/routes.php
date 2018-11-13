@@ -10,6 +10,9 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
     Route::post('/create-issue', 'BoardController@createIssue');
 
     Route::post('/update-desc', 'IssueController@updateDescription');
+    Route::post('/update-status', 'IssueController@updateStatus');
+    Route::post('/update-assignee', 'IssueController@updateAssignee');
+    Route::post('/update-priority', 'IssueController@updatePriority');
     Route::post('/add-comment', 'IssueController@addComment');
 
     Route::get('/announce', 'BoardController@closeIframe');

@@ -13,6 +13,14 @@
     .flex-right {
         justify-content: flex-end;
     }
+
+    select.slbActivities {
+        border: 0px;
+        background: #fff;
+    }
+    #historyBox {
+        display: none;
+    }
 </style>
 @stop
 @section('content')
@@ -43,46 +51,51 @@
                 <div class="row flex-display">
                     <h4 class="col-md-2 col-xs-2">Activities</h4>
                     <div class="col-md-10 col-xs-10 flex-center flex-right">
-                        <span class="dropdown-toggle" data-toggle="dropdown">Comments
+                        <select name="slbActivities" class="slbActivities" onchange="changeActivity(this)">
+                            <option value="1">Comments</option>
+                            <option value="2">History</option>
+                        </select>
+                        {{-- <span class="dropdown-toggle" data-toggle="dropdown">Comments
                         <span class="fa fa-caret-down"></span></span>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="dropdown-item"><a href="#">History</a></li>
-                        </ul>
+                        </ul> --}}
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-2 col-xs-2">
-                        <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
+            <div id="commentBox">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <textarea id="txtComment" class="form-control" placeholder="Add a comment..."></textarea>
+                            <div id="commentActions"></div>
+                        </div>
                     </div>
-                    <div class="col-md-10 col-xs-10">
-                        <textarea id="txtComment" class="form-control" placeholder="Add a comment..."></textarea>
-                        <div id="commentActions"></div>
+                </div>
+                <div class="chat" id="box-comment">
+                    @foreach($comments as $comment)
+                    <div class="item">
+                        <img src="/images/icons_user.svg" alt="user image" class="img-circle">
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{ $comment->created_at }}</small>
+                                {{ $comment->usercommented->full_name }}
+                            </a>
+                            {{ $comment->description }}
+                        </p>
                     </div>
+                    @endforeach
                 </div>
             </div>
-            <div class="chat" id="box-comment">
-                <div class="item">
-                    <img src="/images/icons_user.svg" alt="user image" class="img-circle">
-
-                    <p class="message">
-                        <a href="#" class="name">
-                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                            Mike Doe
-                        </a>
-                         would like to meet you to discuss the latest news about
-                        the arrival of the new theme. They say it is going to be one the
-                        best themes on the market
-                    </p>
-                </div>
+            <div id="historyBox">
+                <h3>History</h3>
             </div>
         </div>
         <div class="col-md-5 col-xs-5">
             <dl>
                 <dt>Status</dt>
                 <dd>
-                    <select class="form-control" name="projectId" id="projectId">
+                    <select class="form-control" name="projectId" id="projectId" onchange="updateStatus(this)">
                         @foreach($issueStatus as $status)
                         @php
                             $selected = $bugDetail->issue_status == $status->id ? "selected" : "";
@@ -99,7 +112,7 @@
                                 <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
                             </div>
                             <div class="col-md-10 col-xs-10 flex-center">
-                                <select class="form-control" name="assignee" id="assignee">
+                                <select class="form-control" name="assignee" id="assignee" onchange="updateAssignee(this)">
                                     <option value="0">Unassigned</option>
                                     @foreach($assignees as $assignee)
                                     @php
@@ -139,7 +152,7 @@
                 </dd>
                 <dt>Ưu tiên</dt>
                 <dd>
-                    <select class="form-control" name="priorityId" id="priorityId">
+                    <select class="form-control" name="priorityId" id="priorityId" onchange="updatePriority(this)">
                     @foreach($priorities as $priority)
                     @php
                         $selected = $bugDetail->priority_id == $priority->id ? "selected" : "";
@@ -150,7 +163,7 @@
                 </dd>
             </dl>
             <hr>
-            <div id="moreInfo" class="collapse">
+            {{-- <div id="moreInfo" class="collapse">
                 <dl>
                     <dt>Status</dt>
                     <dd>a</dd>
@@ -159,8 +172,8 @@
                     <dt>Người báo cáo</dt>
                     <dd>c</dd>
                 </dl>
-            </div>
-            <div><a class="btn-toggle-advance" data-toggle="collapse" href="#moreInfo">Show more</a></div>
+            </div> --}}
+            {{-- <div><a class="btn-toggle-advance" data-toggle="collapse" href="#moreInfo">Show more</a></div> --}}
             <div>
                 <p>Created {{ $createdTemp }}</p>
                 <p>Updated {{ $updatedTemp }}</p>
