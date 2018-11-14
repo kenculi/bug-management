@@ -17,6 +17,33 @@ class IssueStatusController extends Controller
 {
 	public function createStatus(Request $request)
 	{
-		return view('board::create-issue-status');
+		if ($request->isMethod('post')) {
+			$params = $request->all();
+
+			if (!empty($params['projectId']) && !$params['projectId']) {
+                return redirect()->back()->withInput()->withErrors(['projectId'=> 'Chọn project!']);
+            }
+
+            if (!empty($params['name']) && !$params['name']) {
+                return redirect()->back()->withInput()->withErrors(['name'=> 'Nhập tên trạng thái!']);
+            }
+
+			$sequence = IssueStatus::where('proj_id', $params['projectId'])->max('sequence');			
+			$insertStatus = [
+                "proj_id"       => (int)$params['projectId'],
+                "name"      	=> $params['name'],
+                "sequence"      => $sequence + 1,
+                "description"   => $params['description']
+            ];
+
+            IssueStatus::insert($insertStatus);
+            $request->flash();
+            \Session::flash('success', 'Tạo thành công trạng thái mới!');
+            return view('board::close-iframe')->with('message','');
+		} else {
+			$projects = Project::getAllProject(['id', 'name']);
+			return view('board::create-issue-status')->with("projects", $projects);
+		}
+		
 	}
 }
