@@ -60,9 +60,9 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="statusColumn">
         @foreach ($issue_statuss as $issue_status)
-    	<div class="col-md-2 column">
+    	<div class="col-md-2" data-sequence="{{ $issue_status->id }}">
     		<div class="box">
     			<div class="box-header with-border">
     				<h3 class="box-title">{{ $issue_status->name }}</h1>
@@ -89,6 +89,7 @@
 @section('script')
 <script type="text/javascript">
     var TOKEN = "{{ csrf_token() }}";
+    var projectId = 1;
 </script>
 @stop
 

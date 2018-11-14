@@ -1,8 +1,30 @@
 $(function() {
-    $(".column").sortable({
-        connectWith: ".column",
-        handle: ".box-header",
-        placeholder: "box-placeholder ui-corner-all"
+    $("#statusColumn").sortable({
+        revert: true,
+        // update: function(event, ui) { 
+        //     var newSequence = [];
+        //     $("#statusColumn").children().forEach(function (index, el) {
+        //         console.log(el.attr("data-sequence"));
+        //     });
+        // },
+        start: function(event, ui) {
+            var oldSequence = [];
+            var listElement = $("#statusColumn").children();
+            listElement.each(function(element){
+                oldSequence.push($(element).attr('data-sequence'));
+            });
+            console.log(oldSequence);
+        },
+        stop: function (event, ui) {
+            // var sequence = ui.item.attr('data-sequence');
+            // var targetSequence = ui.item[0].previousElementSibling;
+            // if (!targetSequence) {
+            //     targetSequence = 1;
+            // } else {
+            //     targetSequence = targetSequence.getAttribute('data-sequence');
+            // }
+            // console.log(sequence, targetSequence);
+        }
     }).disableSelection();
 
     $(".box")

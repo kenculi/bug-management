@@ -32,7 +32,7 @@
     <button type="button" class="close btn-cancel" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="padding-right-10"><i class="fa fa-ellipsis-h"></i></span></button>
     <h4 class="modal-title" id="myModalLabel">
-        <span class="projTitle"><a href="/board/browse/{{ $bugDetail->id }}"> {{ !empty($bugDetail) ? $firstLetter . $bugDetail->id : "" }}</a></span>
+        <span class="projTitle"><a target="_blank" href="/board/browse/{{ $bugDetail->id }}"> {{ !empty($bugDetail) ? $firstLetter . $bugDetail->id : "" }}</a></span>
     </h4>
 </div>
 <div class="box-body form-scrolling bug-detail">

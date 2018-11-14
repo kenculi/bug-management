@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th10 14, 2018 lúc 06:57 PM
+-- Thời gian đã tạo: Th10 13, 2018 lúc 06:13 PM
 -- Phiên bản máy phục vụ: 10.3.9-MariaDB
 -- Phiên bản PHP: 7.1.22
 
@@ -39,19 +39,14 @@ CREATE TABLE IF NOT EXISTS `activities_log` (
   `note` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `activities_log`
 --
 
 INSERT INTO `activities_log` (`id`, `type`, `field`, `issue_id`, `project_id`, `user_id`, `note`, `created_at`) VALUES
-(1, 2, 1, 1, 1, 2, 'A -> B', '2018-11-13 18:07:38'),
-(2, 2, 2, 1, 1, 2, 'vượng đang học -> vượng đang học n&egrave;', '2018-11-14 16:46:27'),
-(3, 2, 3, 1, 1, 2, 'Kiểm tra -> Hoàn thành', '2018-11-14 16:46:38'),
-(4, 2, 4, 1, 1, 2, 'Duy Vuong Dao -> Vượng Duy', '2018-11-14 16:46:42'),
-(5, 2, 6, 1, 1, 2, 'Highest -> High', '2018-11-14 16:46:56'),
-(6, 2, 5, 1, 1, 2, 'ha -> ha,kaka,hihi', '2018-11-14 16:47:03');
+(1, 2, 1, 1, 1, 2, 'A -> B', '2018-11-13 18:07:38');
 
 -- --------------------------------------------------------
 
@@ -66,8 +61,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `proj_id` int(11) NOT NULL,
   `issue_id` int(11) NOT NULL,
   `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -386,8 +381,8 @@ CREATE TABLE IF NOT EXISTS `invite` (
   `user_send_id` int(11) NOT NULL,
   `user_receive_id` int(11) NOT NULL,
   `type` int(11) NOT NULL DEFAULT 1 COMMENT '1:Đã mời        2:Đã chấp nhận      3:Từ chối',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -434,9 +429,9 @@ CREATE TABLE IF NOT EXISTS `issue` (
 --
 
 INSERT INTO `issue` (`id`, `proj_id`, `reporter`, `assignee`, `summary`, `issue_status`, `issue_type`, `issue_link`, `attachment`, `due_date`, `description`, `priority_id`, `label`, `original_estimate`, `remaining_estimate`, `resolution_id`, `country_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 'Yes', 4, 1, 1, '1', '2018-11-13 14:15:32', 'vượng đang học n&egrave;', 2, '1,2,3', 1, 1, 1, 1, '2018-11-13 14:05:40', '2018-11-14 16:47:03'),
-(2, 1, 1, 1, 'No', 2, 1, 1, '1', '2018-11-10 16:35:13', '1', 1, '1', 1, 1, 1, 1, '2018-11-09 13:07:56', '2018-11-14 17:17:02'),
-(3, 1, 2, NULL, 'vượng', 1, NULL, 4, NULL, '2018-11-13 15:46:18', 'vượng đang l&agrave;m', 2, '1,2,3', NULL, NULL, NULL, NULL, '2018-11-12 17:23:18', '2018-11-14 16:53:14');
+(1, 1, 1, 1, 'Yes', 3, 1, 1, '1', '2018-11-13 14:15:32', 'vượng đang học', 1, '1', 1, 1, 1, 1, '2018-11-13 14:05:40', '2018-11-13 18:13:06'),
+(2, 1, 1, 1, 'No', 3, 1, 1, '1', '2018-11-10 16:35:13', '1', 1, '1', 1, 1, 1, 1, '2018-11-09 13:07:56', '2018-11-10 16:35:13'),
+(3, 1, 2, NULL, 'vượng', 1, NULL, 4, NULL, '2018-11-13 15:46:18', 'vượng đang l&agrave;m', 2, '1,2,3', NULL, NULL, NULL, NULL, '2018-11-12 17:23:18', '2018-11-13 17:07:44');
 
 -- --------------------------------------------------------
 
@@ -502,8 +497,6 @@ CREATE TABLE IF NOT EXISTS `issuestatus` (
   `description` text DEFAULT NULL,
   `proj_id` int(11) DEFAULT NULL,
   `icon_url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -511,14 +504,14 @@ CREATE TABLE IF NOT EXISTS `issuestatus` (
 -- Đang đổ dữ liệu cho bảng `issuestatus`
 --
 
-INSERT INTO `issuestatus` (`id`, `sequence`, `name`, `description`, `proj_id`, `icon_url`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Khởi tạo', '', 1, '/images/icons/statuses/open.png', '2018-11-14 18:08:07', '2018-11-14 18:08:07'),
-(2, 2, 'Thực thi', NULL, 1, '/images/icons/status_generic.gif', '2018-11-14 18:08:07', '2018-11-14 18:08:07'),
-(3, 3, 'Kiểm tra', NULL, 1, '/images/icons/status_generic.gif', '2018-11-14 18:08:07', '2018-11-14 18:08:07'),
-(4, 4, 'Hoàn thành', '', 1, '/images/icons/statuses/inprogress.png', '2018-11-14 18:08:07', '2018-11-14 18:08:07'),
-(5, 5, 'Reopened', '', 0, '/images/icons/statuses/reopened.png', '2018-11-14 18:08:07', '2018-11-14 18:08:07'),
-(6, 6, 'Resolved', '', 0, '/images/icons/statuses/resolved.png', '2018-11-14 18:08:07', '2018-11-14 18:08:07'),
-(7, 7, 'Closed', '', 0, '/images/icons/statuses/closed.png', '2018-11-14 18:08:07', '2018-11-14 18:08:07');
+INSERT INTO `issuestatus` (`id`, `sequence`, `name`, `description`, `proj_id`, `icon_url`) VALUES
+(1, 1, 'Khởi tạo', '', 1, '/images/icons/statuses/open.png'),
+(2, 2, 'Thực thi', NULL, 1, '/images/icons/status_generic.gif'),
+(3, 3, 'Kiểm tra', NULL, 1, '/images/icons/status_generic.gif'),
+(4, 4, 'Hoàn thành', '', 1, '/images/icons/statuses/inprogress.png'),
+(5, 5, 'Reopened', '', 0, '/images/icons/statuses/reopened.png'),
+(6, 6, 'Resolved', '', 0, '/images/icons/statuses/resolved.png'),
+(7, 7, 'Closed', '', 0, '/images/icons/statuses/closed.png');
 
 -- --------------------------------------------------------
 
@@ -644,8 +637,8 @@ CREATE TABLE IF NOT EXISTS `project` (
   `name` varchar(255) NOT NULL,
   `p_key` varchar(50) DEFAULT NULL,
   `lead_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -697,8 +690,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `nation` smallint(3) NOT NULL,
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
