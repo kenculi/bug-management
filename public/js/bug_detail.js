@@ -57,7 +57,7 @@ function updateStatus(object) {
     $.ajax({
         type: "POST",
         data: { "issueId": issueId, "issueStatus": issueStatus, "_token": TOKEN },
-        url: "/board/update-status",
+        url: "/board/update-status-issue",
         success: function(response) {
             if (!response['error']) {
                 toastr["success"]('Cập nhật trạng thái thành công');

@@ -26,4 +26,12 @@ class IssueStatus extends Model
 			->get();
 		return $result;
 	}
+
+	public static function getStatusName($issueStatusId = 0)
+	{
+    	$result = self::select("name")
+			->where("id", (int)$issueStatusId)
+			->first();
+		return $result->name;
+	}
 }

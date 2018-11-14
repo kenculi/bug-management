@@ -19,4 +19,12 @@ class Priority extends Model
 			->get();
 		return $result;
 	}
+
+	public static function getPriorityName($priorityId = 0)
+	{
+    	$result = self::select("name")
+			->where("id", (int)$priorityId)
+			->first();
+		return $result->name;
+	}
 }

@@ -1,4 +1,6 @@
-@extends('iframe')
+@extends('master')
+@section('title', 'Issue')
+@section('page-header') {{ !empty($bugDetail) ? $firstLetter . $bugDetail->id : "" }} @stop
 @section('cssloader')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style type="text/css">
@@ -28,14 +30,7 @@
 </style>
 @stop
 @section('content')
-<div class="modal-header">
-    <button type="button" class="close btn-cancel" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="padding-right-10"><i class="fa fa-ellipsis-h"></i></span></button>
-    <h4 class="modal-title" id="myModalLabel">
-        <span class="projTitle"><a href="/board/browse/{{ $bugDetail->id }}"> {{ !empty($bugDetail) ? $firstLetter . $bugDetail->id : "" }}</a></span>
-    </h4>
-</div>
-<div class="box-body form-scrolling bug-detail">
+<div class="bug-detail">
     {{ csrf_field() }}
     <div class="row">
         @if (!empty($bugDetail))
@@ -178,17 +173,6 @@
                 </dd>
             </dl>
             <hr>
-            {{-- <div id="moreInfo" class="collapse">
-                <dl>
-                    <dt>Status</dt>
-                    <dd>a</dd>
-                    <dt>Người thực hiện</dt>
-                    <dd>b</dd>
-                    <dt>Người báo cáo</dt>
-                    <dd>c</dd>
-                </dl>
-            </div> --}}
-            {{-- <div><a class="btn-toggle-advance" data-toggle="collapse" href="#moreInfo">Show more</a></div> --}}
             <div>
                 <p>Created {{ $createdTemp }}</p>
                 <p>Updated {{ $updatedTemp }}</p>
