@@ -1,29 +1,31 @@
 $(function() {
+    var oldSequence = [];
     $("#statusColumn").sortable({
         revert: true,
-        // update: function(event, ui) { 
-        //     var newSequence = [];
-        //     $("#statusColumn").children().forEach(function (index, el) {
-        //         console.log(el.attr("data-sequence"));
-        //     });
-        // },
         start: function(event, ui) {
-            var oldSequence = [];
-            var listElement = $("#statusColumn").children();
-            listElement.each(function(element){
-                oldSequence.push($(element).attr('data-sequence'));
+            value = []
+            var listElement = $("#statusColumn").find("div[class='col-md-2 ui-sortable-handle']");
+            listElement.each(function(){
+                value.push($(this).attr('id'));
             });
-            console.log(oldSequence);
+            oldSequence = value;
         },
         stop: function (event, ui) {
-            // var sequence = ui.item.attr('data-sequence');
-            // var targetSequence = ui.item[0].previousElementSibling;
-            // if (!targetSequence) {
-            //     targetSequence = 1;
-            // } else {
-            //     targetSequence = targetSequence.getAttribute('data-sequence');
-            // }
-            // console.log(sequence, targetSequence);
+            var newSequence = [];
+            var listElement = $("#statusColumn").find("div[class='col-md-2 ui-sortable-handle']");
+            listElement.each(function(){
+                newSequence.push($(this).attr('id'));
+            });
+
+            if(JSON.stringify(oldSequence) != JSON.stringify(newSequence)) {
+                $.ajax({
+                    type: "POST",
+                    data: { "sortedIds": newSequence, "_token": TOKEN },
+                    url: "/board/update-sequence",
+                    success: function(response) {
+                    }
+                });
+            }
         }
     }).disableSelection();
 

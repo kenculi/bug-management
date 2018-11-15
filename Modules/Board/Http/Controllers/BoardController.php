@@ -56,6 +56,19 @@ class BoardController extends Controller
         return response()->json(['success'=>'Data is successfully added']);
     }
 
+    public function updateSequence(Request $request)
+    {
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            $idList = $params['sortedIds'];
+            for ($i=0; $i < count($idList); $i++) {
+                IssueStatus::where('id', (int)$idList[$i])->update(['sequence' => $i+1]);
+            }
+
+            return response()->json(['error' => 0]);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      * @param  Request $request

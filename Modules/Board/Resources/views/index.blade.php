@@ -62,7 +62,7 @@
 
     <div class="row" id="statusColumn">
         @foreach ($issue_statuss as $issue_status)
-    	<div class="col-md-2" data-sequence="{{ $issue_status->id }}">
+    	<div class="col-md-2" id="{{ $issue_status->id }}">
     		<div class="box">
     			<div class="box-header with-border">
     				<h3 class="box-title">{{ $issue_status->name }}</h1>

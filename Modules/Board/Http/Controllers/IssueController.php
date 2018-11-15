@@ -75,7 +75,7 @@ class IssueController extends Controller
 
 	public function updateDescription(Request $request)
 	{
-		if ($request->isMethod('post')) {
+		if ($request->isMethod('post') && Auth::check()) {
 			$params = $request->all();
 			$issueId = (int)$params['issueId'];
 			$findIssue = Issue::find($issueId);
@@ -98,7 +98,7 @@ class IssueController extends Controller
 
 	public function updateAssignee(Request $request)
 	{
-		if ($request->isMethod('post')) {
+		if ($request->isMethod('post') && Auth::check()) {
 			$params = $request->all();
 			$issueId = (int)$params['issueId'];
 			$findIssue = Issue::find($issueId);
@@ -121,7 +121,7 @@ class IssueController extends Controller
 
 	public function updateStatus(Request $request)
 	{
-		if ($request->isMethod('post')) {
+		if ($request->isMethod('post') && Auth::check()) {
 			$params = $request->all();
 			$issueId = (int)$params['issueId'];
 			$findIssue = Issue::find($issueId);
@@ -144,7 +144,7 @@ class IssueController extends Controller
 
 	public function updatePriority(Request $request)
 	{
-		if ($request->isMethod('post')) {
+		if ($request->isMethod('post') && Auth::check()) {
 			$params = $request->all();
 			$issueId = (int)$params['issueId'];
 			$findIssue = Issue::find($issueId);
@@ -167,7 +167,7 @@ class IssueController extends Controller
 
 	public function updateLabel(Request $request)
 	{
-		if ($request->isMethod('post')) {
+		if ($request->isMethod('post') && Auth::check()) {
 			$params = $request->all();
 			$issueId = (int)$params['issueId'];
 			if (empty($params['labels'])) {
