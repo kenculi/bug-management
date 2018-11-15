@@ -86,7 +86,7 @@
             <span class="text-danger">{{ $errors->first('assignee') }}</span>
         </div>
         <div class="form-group">
-            <a href=""><label>Chỉ định tôi</label></a>
+            <a><label onClick="assignme({{ Auth::user()->id }})">Chỉ định tôi</label></a>
         </div>
     </div>
     <div class="box-footer text-center">
@@ -103,5 +103,10 @@
         startDate: '0',
         autoclose: true
     })
+
+    function assignme(userId) {
+        $('select[name="assignee"]').find("option[value="+userId+"]").attr("selected", true);
+        $('select[name="assignee"]').refresh();
+    }
 </script>
 @stop
