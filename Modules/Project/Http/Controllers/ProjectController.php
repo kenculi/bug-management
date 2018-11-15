@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\IssueStatus;
 use App\Project;
 
 class ProjectController extends Controller
@@ -39,7 +40,9 @@ class ProjectController extends Controller
                             ->withInput();
             }
 
-            Project::create(['name' => htmlentities(trim($params['projectName'])), 'lead_id' => Auth::user()->id]);
+            $newProjectId = Project::create(['name' => htmlentities(trim($params['projectName'])), 'lead_id' => Auth::user()->id]);
+            IssueStatus::addFourFirstStatus($newProjectId->id);
+
             \Session::flash('success', 'Thêm dự án mới thành công!');
             return view('board::close-iframe')->with('message','');
         }
@@ -92,5 +95,14 @@ class ProjectController extends Controller
         }
         return view('project::delete')
             ->with("project", $findProject);
+    }
+
+    public function activeProject(Request $request)
+    {
+        $projectId = (int)$request->route('id');
+        if ($projectId) {
+            \Cookie::queue(\Cookie::make('projectId', $projectId, 86400));
+        }
+        return redirect("/board");
     }
 }

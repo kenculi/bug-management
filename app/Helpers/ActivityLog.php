@@ -21,7 +21,7 @@ class ActivityLog
 
         $data = [
             'user_id'       => Auth::user()->id,
-            'project_id'    => 1,
+            'project_id'    => \Cookie::has('projectId') ? \Cookie::get('projectId') : 0,
             'type'          => $group,
             'field'         => $content['field'],
             'issue_id'      => $content['issue_id'],

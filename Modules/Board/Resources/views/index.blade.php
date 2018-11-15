@@ -46,8 +46,7 @@
         <div class="col-md-2">
             <form action="" method="GET">
                 <div class="input-group">
-                    <input type="hidden" name="proj_id" class="form-control" value="{{ $issue_statuss[0]->proj_id }}">
-                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm...">
+                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm..." value="{{ old('keyword') }}">
                     <span class="input-group-btn">
                         <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                         </button>
@@ -62,7 +61,7 @@
     </div>
 
     <div class="row" id="statusColumn">
-        @foreach ($issue_statuss as $issue_status)
+        @foreach ($issue_status as $issue_status)
     	<div class="col-md-2" id="{{ $issue_status->id }}">
     		<div class="box">
     			<div class="box-header with-border">
@@ -91,7 +90,7 @@
 @section('script')
 <script type="text/javascript">
     var TOKEN = "{{ csrf_token() }}";
-    var projectId = 1;
+    var projectId = {{ $projectId }};
 </script>
 @stop
 

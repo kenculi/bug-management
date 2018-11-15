@@ -29,7 +29,7 @@ class BoardController extends Controller
     public function index(Request $request)
     {
         $params = $request->all();
-        $projectId = !empty($params['proj_id']) ? (int)$params['proj_id'] : 0;
+        $projectId = \Cookie::has('projectId') ? \Cookie::get('projectId') : 0;
         $project = Project::where('id', $projectId)->select('name')->first();
 
         $project_name = !empty($project->name) ? $project->name : "Unknow";
@@ -44,7 +44,7 @@ class BoardController extends Controller
         $issues = $queryBuilder->get();
         $request->flash();
 
-        return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_statuss' => $issue_status]);
+        return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_status' => $issue_status, 'projectId' => $projectId]);
     }
 
     public function closeIframe()

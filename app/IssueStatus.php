@@ -34,4 +34,18 @@ class IssueStatus extends Model
 			->first();
 		return $result->name;
 	}
+
+	public static function addFourFirstStatus($projectId = 0)
+	{
+		if ($projectId) {
+			$insertData = [
+				['sequence' => 1, 'name' => 'Khởi tạo', 'proj_id' => (int)$projectId],
+				['sequence' => 2, 'name' => 'Thực thi', 'proj_id' => (int)$projectId],
+				['sequence' => 3, 'name' => 'Kiểm tra', 'proj_id' => (int)$projectId],
+				['sequence' => 4, 'name' => 'Hoàn thành', 'proj_id' => (int)$projectId],
+			];
+			
+			self::insert($insertData);
+		}
+	}
 }

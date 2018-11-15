@@ -61,7 +61,7 @@ class IssueController extends Controller
 			$params = $request->all();
 			$insertComment = [
                 "user_id"      	=> Auth::id(),
-                "proj_id"       => 1,
+                "proj_id"       => \Cookie::has('projectId') ? \Cookie::get('projectId') : 0,
                 "issue_id"      => (int)$params['issueId'],
                 "description"   => htmlentities(trim($params['comment']))
             ];
@@ -182,7 +182,7 @@ class IssueController extends Controller
 			foreach ($params['labels'] as $value) {
 				$checkLabelExisted = Label::find($value);
 				if (empty($checkLabelExisted)) {
-					$inserted = Label::create(['proj_id' => 1, 'label' => trim($value)]);
+					$inserted = Label::create(['proj_id' => \Cookie::has('projectId') ? \Cookie::get('projectId') : 0, 'label' => trim($value)]);
 					$labelToInsert[] = $inserted->id;
 					$newValue[] = trim($value);
 				} else {

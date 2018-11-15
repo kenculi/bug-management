@@ -34,7 +34,7 @@
                     <tbody>
                         @foreach ($projects as $value)
                           <tr>
-                            <td><a href="/project/active-project"></a>{{ $value->name }}</td></td>
+                            <td><a href="/project/active-project/{{ $value->id }}">{{ $value->name }}</a></td></td>
                             <td>{{ $value->user->full_name }}</td>
                             <td>
                                 {{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i:s') }}
@@ -46,6 +46,7 @@
                             	<a href="">Mời</a>
                             </td>
                             <td align="center">
+                                <a href="/project/active-project/{{ $value->id }}" title="Quản lý lỗi"><i class="glyphicon glyphicon-info-sign"></i></a>&nbsp;
                             	<a href="" class="modal-trigger" data-url="/project/edit/{{ $value->id }}" title="Sửa"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;
                             	<a href="" class="modal-trigger" data-url="/project/delete/{{ $value->id }}" title="Xóa"><i class="glyphicon glyphicon-remove"></i></a>
                             </td>
