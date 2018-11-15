@@ -20,4 +20,9 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
     Route::get('/browse/{id}', 'IssueController@browseIssue')->where('id', '[0-9]+');
 
     Route::get('/announce', 'BoardController@closeIframe');
+    Route::get('/search-issue', 'BoardController@searchIssue');
+
+    Route::get('/create-status', 'IssueStatusController@createStatus')->where('id', '[0-9]+');
+    Route::post('/create-status', 'IssueStatusController@createStatus')->where('id', '[0-9]+');
+
 });
