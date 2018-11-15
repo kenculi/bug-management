@@ -44,7 +44,7 @@
     <!-- /.search form -->
     <div class="row after_row">
         <div class="col-md-2">
-            <form action="{{ url('/board/search-issue') }}" method="GET">
+            <form action="" method="GET">
                 <div class="input-group">
                     <input type="hidden" name="proj_id" class="form-control" value="{{ $issue_statuss[0]->proj_id }}">
                     <input type="text" name="keyword" class="form-control" placeholder="Search...">

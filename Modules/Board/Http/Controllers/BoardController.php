@@ -36,7 +36,13 @@ class BoardController extends Controller
 
         $issue_status = IssueStatus::getStatusByProjectID($projectId);
 
-        $issues = Issue::where('proj_id', $projectId)->get();
+        $queryBuilder = Issue::where('proj_id', $projectId);
+        if (!empty($params['keyword'])) {
+            $queryBuilder->where('summary', 'LIKE', '%'.$params['keyword'].'%');
+        }
+
+        $issues = $queryBuilder->get();
+        $request->flash();
 
         return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_statuss' => $issue_status]);
     }
@@ -172,24 +178,5 @@ class BoardController extends Controller
             ->with('issues', $issues)
             ->with('assignees', $assignees)
             ->with('priorities', $priorities);
-    }
-
-    public function searchIssue(Request $request)
-    {
-        $params = $request->all();
-        $projectId = !empty($params['proj_id']) ? (int)$params['proj_id'] : 0;
-        $project = Project::where('id', $projectId)->select('name')->first();
-
-        $project_name = !empty($project->name) ? $project->name : "Unknow";
-
-        $issue_status = IssueStatus::getStatusByProjectID($projectId);
-
-        $issues = Issue::where('proj_id', $projectId)->where('summary', 'LIKE', '%'.$params['keyword'].'%')->get();
-
-        return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_statuss' => $issue_status]);
-
-        $request->flash();
-        \Session::flash('success', 'Tạo thành công trạng thái mới!');
-        return view('board::close-iframe')->with('message','');
     }
 }
