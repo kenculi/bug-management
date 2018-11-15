@@ -5,7 +5,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><i class="fa fa-bug"></i></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b><i class="fa fa-bug"></i></b> Bug Management</span>
+        <span class="logo-lg"><b><i class="fa fa-bug"></i></b> Quản lý lỗi</span>
     </a>
 
     <!-- Header Navbar -->
@@ -24,7 +24,7 @@
                         <!-- The user image in the navbar-->
                         <img src="{{ asset("images/icons_user.svg") }}" class="user-image" alt="User Image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">Legend - Zero9</span>
+                        <span class="hidden-xs">{{ Auth::user()->full_name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
@@ -32,16 +32,16 @@
                             <img src="{{ asset("images/icons_user.svg") }}" class="img-circle" alt="User Image">
 
                             <p>
-                                Legend - Zero9
+                                {{ Auth::user()->full_name }}
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#" class="btn btn-default btn-flat">Thông tin cá nhân</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Thoát</a>
                             </div>
                         </li>
                     </ul>

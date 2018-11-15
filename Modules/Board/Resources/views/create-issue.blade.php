@@ -26,7 +26,7 @@
     </div>
     <div class="box-body form-scrolling">
         <div class="form-group">
-            <label for="projectId">Project <span class="requiredStar"></span></label>
+            <label for="projectId">Dự án <span class="requiredStar"></span></label>
             <select class="form-control" name="projectId" id="projectId">
                 @foreach($projects as $project)
                     <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -36,13 +36,13 @@
         </div>
 
         <div class="form-group">
-            <label for="summary">Summary <span class="requiredStar"></span></label>
-            <input type="text" class="form-control" name="summary" id="summary" placeholder="Summary"  value="{{ old('summary') }}">
+            <label for="summary">Tóm tắt <span class="requiredStar"></span></label>
+            <input type="text" class="form-control" name="summary" id="summary" placeholder="Tóm tắt"  value="{{ old('summary') }}">
             <span class="text-danger">{{ $errors->first('summary') }}</span>
         </div>
 
         <div class="form-group">
-            <label for="priorityId">Priority <span class="requiredStar"></span></label>
+            <label for="priorityId">Độ ưu tiên <span class="requiredStar"></span></label>
             <select class="form-control" name="priorityId" id="priorityId">
                 @foreach($priorities as $priority)
                     <option value="{{ $priority->id }}">{{ $priority->name }}</option>
@@ -51,12 +51,12 @@
             <span class="text-danger">{{ $errors->first('priorityId') }}</span>
         </div>
         <div class="form-group">
-            <label class="control-label">Due date</label>
-                <input type="text" name="dueDate" class="form-control" value="{{ old('dueDate') }}" placeholder="Due date">
+            <label class="control-label">Ngày kết thúc</label>
+                <input type="text" name="dueDate" class="form-control" value="{{ old('dueDate') }}" placeholder="Ngày kết thúc">
                 <span>(DD-MM-YYYY)</span>
         </div>
         <div class="form-group">
-            <label for="linkedIssueType">Linked issues</label>
+            <label for="linkedIssueType">Loại liên kết lỗi</label>
             <select class="form-control" name="linkedIssueType" id="linkedIssueType">
                 <option value="0">-------</option>
                 @foreach($linkedIssueTypes as $linkedIssueType)
@@ -66,7 +66,7 @@
             <span class="text-danger">{{ $errors->first('linkedIssueType') }}</span>
         </div>
         <div class="form-group">
-            <label for="issueId">Issue</label>
+            <label for="issueId">Lỗi</label>
             <select class="form-control" name="issueId" id="issueId">
                 <option value="0">-------</option>
                 @foreach($issues as $issue)
@@ -76,9 +76,9 @@
             <span class="text-danger">{{ $errors->first('issueId') }}</span>
         </div>
         <div class="form-group">
-            <label for="assignee">Assignee</label>
+            <label for="assignee">Người thực hiện</label>
             <select class="form-control" name="assignee" id="assignee">
-                <option value="0">No one</option>
+                <option value="0">Không chỉ định</option>
                 @foreach($assignees as $assignee)
                     <option value="{{ $assignee->userinvited->id }}">{{ $assignee->userinvited->full_name }}</option>
                 @endforeach
@@ -86,7 +86,7 @@
             <span class="text-danger">{{ $errors->first('assignee') }}</span>
         </div>
         <div class="form-group">
-            <a href=""><label>Assign to me</label></a>
+            <a href=""><label>Chỉ định tôi</label></a>
         </div>
     </div>
     <div class="box-footer text-center">

@@ -9,8 +9,8 @@
             <li><a href="/user">Management</a></li>
         </ul>
     </li> --}}
-    {{-- <li><a href="/"><i class="fa fa-list"></i> <span>Bug management</span></a></li> --}}
-    <li><a href="/board"><i class="fa fa-list-alt"></i> <span>Board</span></a></li>
+    <li><a href="/project"><i class="fa fa-list"></i> <span>Dự án</span></a></li>
+    <li><a href="/board"><i class="fa fa-list-alt"></i> <span>Bảng</span></a></li>
     {{-- <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

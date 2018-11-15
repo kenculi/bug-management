@@ -32,7 +32,8 @@
 @section('content')
 <div class="bug-detail">
     {{ csrf_field() }}
-    <div class="row">
+    <div class="box">
+        <div class="box-body">
         @if (!empty($bugDetail))
         <div class="col-md-7 col-xs-7">
             <h3>{{ $bugDetail->summary }}</h3>
@@ -42,7 +43,7 @@
                 <button class="btn btn-sm btn-default" title="Link issue"><i class="glyphicon glyphicon-link"></i></button>
             </p>
             <div>
-                <textarea id="txtDesc" class="form-control" placeholder="Add a description...">{{ $bugDetail->description }}</textarea>
+                <textarea id="txtDesc" class="form-control" placeholder="Nhập mô tả...">{{ $bugDetail->description }}</textarea>
                 <div id="descActions"></div>
             </div>
             <div class="form-group">
@@ -50,8 +51,8 @@
                     <h4 class="col-md-2 col-xs-2">Activities</h4>
                     <div class="col-md-10 col-xs-10 flex-center flex-right">
                         <select name="slbActivities" class="slbActivities" onchange="changeActivity(this)">
-                            <option value="1">Comments</option>
-                            <option value="2">History</option>
+                            <option value="1">Bình luận</option>
+                            <option value="2">Lịch sử thay đổi</option>
                         </select>
                     </div>
                 </div>
@@ -60,7 +61,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
-                            <textarea id="txtComment" class="form-control" placeholder="Add a comment..."></textarea>
+                            <textarea id="txtComment" class="form-control" placeholder="Nhập bình luận..."></textarea>
                             <div id="commentActions"></div>
                         </div>
                     </div>
@@ -101,7 +102,7 @@
         </div>
         <div class="col-md-5 col-xs-5">
             <dl>
-                <dt>Status</dt>
+                <dt>Trạng thái</dt>
                 <dd>
                     <select class="form-control" name="projectId" id="projectId" onchange="updateStatus(this)">
                         @foreach($issueStatus as $status)
@@ -121,14 +122,14 @@
                             </div>
                             <div class="col-md-10 col-xs-10 flex-center">
                                 <select class="form-control" name="assignee" id="assignee" onchange="updateAssignee(this)">
-                                    <option value="0">Unassigned</option>
+                                    <option value="0">Không chỉ định</option>
                                     @foreach($assignees as $assignee)
                                     @php
                                         $selected = $bugDetail->assignee == $assignee->id ? "selected" : "";
                                     @endphp
                                         <option {{ $selected }} value="{{ $assignee->userinvited->id }}">{{ $assignee->userinvited->full_name }}</option>
                                     @endforeach
-                                    {{ !empty($assignee->full_name) ? $assignee->full_name : "Unknow" }}
+                                    {{ !empty($assignee->full_name) ? $assignee->full_name : "N/A" }}
                                 </select>
                             </div>
                         </div>
@@ -142,7 +143,7 @@
                                 <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
                             </div>
                             <div class="col-md-10 col-xs-10 flex-center">
-                                {{ !empty($reporter->full_name) ? $reporter->full_name : "Unknow" }}
+                                {{ !empty($reporter->full_name) ? $reporter->full_name : "N/A" }}
                             </div>
                         </div>
                     </div>
@@ -174,13 +175,14 @@
             </dl>
             <hr>
             <div>
-                <p>Created {{ $createdTemp }}</p>
-                <p>Updated {{ $updatedTemp }}</p>
+                <p>Tạo mới {{ $createdTemp }}</p>
+                <p>Cập nhật {{ $updatedTemp }}</p>
             </div>
         </div>
         @else
-            <h3>Have no information for this issue or this issue id is not exist</h3>
+            <h3>Không tìm được thông tin hoặc lỗi này không tồn tại</h3>
         @endif
+        </div>
     </div>
 </div>
 @stop

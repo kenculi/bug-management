@@ -168,7 +168,7 @@ class BoardController extends Controller
 
             Issue::create($insertIssue);
             $request->flash();
-            \Session::flash('success', 'Issue was created!');
+            \Session::flash('success', 'Tạo lỗi thành công!');
             return view('board::close-iframe')->with('message','');
         }
 

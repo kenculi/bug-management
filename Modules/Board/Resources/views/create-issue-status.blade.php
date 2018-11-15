@@ -26,7 +26,7 @@
     </div>
     <div class="box-body form-scrolling">
         <div class="form-group">
-            <label for="projectId">Project <span class="requiredStar"></span></label>
+            <label for="projectId">Dự án <span class="requiredStar"></span></label>
             <select class="form-control" name="projectId" id="projectId">
                 @foreach($projects as $project)
                     <option value="{{ $project->id }}">{{ $project->name }}</option>

@@ -68,7 +68,7 @@ class IssueController extends Controller
 
             Comment::create($insertComment);
 
-            \Session::flash('success', 'Comment was added!');
+            \Session::flash('success', 'Thêm bình luận thành công!');
             return response()->json(['error' => 0]);
 		}
 	}

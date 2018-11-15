@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Board')
+@section('title', 'Bảng')
 @section('page-header') {{ $project_name }} @stop
 @section('cssloader')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -29,7 +29,7 @@
 
 @section('breadcrumb')
 <div class="breadcrumb">
-    <a href="{{ url('/board/create-issue') }}" class="modal-trigger" data-url="{{ url('/board/create-issue') }}"><button type="button" class="btn btn-block btn-success btn-sm">Create issue</button></a>
+    <a href="{{ url('/board/create-issue') }}" class="modal-trigger" data-url="{{ url('/board/create-issue') }}"><button type="button" class="btn btn-block btn-success btn-sm">Tạo lỗi</button></a>
 </div>
 @stop
 
@@ -47,7 +47,7 @@
             <form action="" method="GET">
                 <div class="input-group">
                     <input type="hidden" name="proj_id" class="form-control" value="{{ $issue_statuss[0]->proj_id }}">
-                    <input type="text" name="keyword" class="form-control" placeholder="Search...">
+                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm...">
                     <span class="input-group-btn">
                         <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                         </button>
@@ -75,7 +75,6 @@
                                 <li id="{!! $issue->id !!}"><a href="{{ url('/board/bug-detail/'.$issue->id) }}" class="modal-trigger" data-url="{{ url('/board/bug-detail/' .$issue->id) }}">{!! $issue->summary !!}</a></li>
                             @endif
                         @endforeach
-                        {{-- <li> <a href="">Link tạo issue</a></li> --}}
                     </ul>
                 </div>
     		</div>
@@ -83,7 +82,7 @@
         @endforeach
     	<div class="col-md-1">
             <a href="{{ url('/board/create-status') }}" class="modal-trigger" data-url="{{ url('/board/create-status') }}">
-    		  <button type="button" class="btn btn-default btn-md" title="Create column"> + </button>
+    		  <button type="button" class="btn btn-default btn-md" title="Thêm trạng thái"> + </button>
             </a>
     	</div>
     </div>

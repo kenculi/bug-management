@@ -9,6 +9,11 @@ class Project extends Model
     protected $table ='project';
 	protected $guarded =[];
 
+	public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'lead_id', 'id');
+    }
+
 	public static function getAllProject($getColumns = [])
 	{
 		$result = self::select($getColumns)->get();
