@@ -26,10 +26,11 @@ class IssueController extends Controller
 	{
 		$id = (int)$request->route('id');
         $findBug = Issue::find($id);
-        $issueStatus = IssueStatus::getStatusByProjectID(1);
+		$projectId = (int)$findBug->proj_id;
+        $issueStatus = IssueStatus::getStatusByProjectID($projectId);
         $reporter = User::getUserInfo($findBug->reporter);
-        $assignees = Invite::getAllByProject(1);
-        $firstLetter = Project::getFirstLetterName(1);
+        $assignees = Invite::getAllByProjectAndType($projectId, ['2']);
+        $firstLetter = Project::getFirstLetterName($projectId);
         $priorities = Priority::getAllPriority(['id', 'name']);
         $labels = Label::getAllLabel("*");
         $comments = Comment::getAllByIssue($id);

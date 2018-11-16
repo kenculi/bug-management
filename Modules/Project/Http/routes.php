@@ -12,4 +12,9 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'project', 'namespace'
     Route::post('/delete/{id}', 'ProjectController@delete')->where('id', '[0-9]+');
 
     Route::get('/active-project/{id}', 'ProjectController@activeProject')->where('id', '[0-9]+');
+
+    Route::get('/invite-member/{id}', 'InviteController@inviteMember')->where('id', '[0-9]+');
+    Route::post('/invite-member/{id}', 'InviteController@inviteMember')->where('id', '[0-9]+');
+
+    Route::get('/invite-link/{code}', 'InviteController@inviteAcceptOrDeny');
 });

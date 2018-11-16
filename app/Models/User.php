@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Invite;
 
 class User extends Authenticatable
 {
@@ -33,5 +35,15 @@ class User extends Authenticatable
             ->where("id", (int)$userId)
             ->first();
         return $result;
+    }
+
+    public static function getUserNotBeInvited($projectId = 0)
+    {
+        $builder = self::select(DB::raw("users.id, email"))
+            ->whereNotIn('users.id',function($query) use ($projectId) {
+               $query->select('user_receive_id')->from('invite')->where("proj_id", (int)$projectId);
+            });
+
+        return $builder->get();
     }
 }

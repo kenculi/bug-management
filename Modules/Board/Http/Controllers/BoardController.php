@@ -83,11 +83,12 @@ class BoardController extends Controller
     public function bugDetail(Request $request)
     {
         $id = (int)$request->route('id');
+        $projectId = \Cookie::has('projectId') ? \Cookie::get('projectId') : 0;
         $findBug = Issue::find($id);
-        $issueStatus = IssueStatus::getStatusByProjectID(1);
+        $issueStatus = IssueStatus::getStatusByProjectID($projectId);
         $reporter = User::getUserInfo($findBug->reporter);
-        $assignees = Invite::getAllByProject(1);
-        $firstLetter = Project::getFirstLetterName(1);
+        $assignees = Invite::getAllByProjectAndType($projectId, ['2']);
+        $firstLetter = Project::getFirstLetterName($projectId);
         $priorities = Priority::getAllPriority(['id', 'name']);
         $labels = Label::getAllLabel("*");
         $comments = Comment::getAllByIssue($id);
@@ -101,7 +102,7 @@ class BoardController extends Controller
 
         return view('board::bug-detail')
             ->with("bugDetail", $findBug)
-            ->with("firstLetter", $firstLetter)
+            ->with("firstLetter", strtoupper($firstLetter))
             ->with("reporter", $reporter)
             ->with("assignees", $assignees)
             ->with("priorities", $priorities)
@@ -115,11 +116,12 @@ class BoardController extends Controller
 
     public function createIssue(Request $request)
     {
-        $projects = Project::getAllProject(['id', 'name']);
+        $projectId = \Cookie::has('projectId') ? \Cookie::get('projectId') : 0;
+        $projects = Project::getAllProjectOfUser(['project.id', 'name']);
         $priorities = Priority::getAllPriority(['id', 'name']);
         $linkedIssueTypes = IssueLinkType::getAllLinkType(['id', 'link_name']);
-        $issues = Issue::where('proj_id', 1)->get();
-        $assignees = Invite::getAllByProject(1);
+        $issues = Issue::where('proj_id', $projectId)->get();
+        $assignees = Invite::getAllByProjectAndType($projectId, ['2']);
 
         if ($request->isMethod('post')) {
             $params = $request->all();

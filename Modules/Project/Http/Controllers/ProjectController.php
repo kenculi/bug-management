@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\IssueStatus;
 use App\Project;
+use App\Invite;
 
 class ProjectController extends Controller
 {
@@ -18,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::getAllProject('*');
+        $projects = Project::getAllProjectOfUser(['project.id','name','project.created_at','lead_id']);
         return view('project::index')
             ->with('projects', $projects);
     }
@@ -42,6 +43,12 @@ class ProjectController extends Controller
 
             $newProjectId = Project::create(['name' => htmlentities(trim($params['projectName'])), 'lead_id' => Auth::user()->id]);
             IssueStatus::addFourFirstStatus($newProjectId->id);
+            Invite::create([
+                'proj_id'           => $newProjectId->id,
+                'user_send_id'      => 0,
+                'user_receive_id'   => Auth::user()->id,
+                'type'              => 2
+            ]);
 
             \Session::flash('success', 'Thêm dự án mới thành công!');
             return view('board::close-iframe')->with('message','');

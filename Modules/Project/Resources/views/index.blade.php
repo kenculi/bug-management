@@ -3,7 +3,7 @@
 @section('page-header', 'Danh sách dự án')
 @section('content')
     <div id="my-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <iframe src="" width="100%" scrolling="yes" frameborder="0"></iframe>
             </div>
@@ -43,7 +43,7 @@
                                 {{ \Carbon\Carbon::parse($value->created_at)->format('d/m/Y H:i:s') }}
                             </td>
                             <td align="center">
-                            	<a href="">Mời</a>
+                            	<a href="" class="modal-trigger" data-url="/project/invite-member/{{ $value->id }}" title="Mời thành viên">Mời</a>
                             </td>
                             <td align="center">
                                 <a href="/project/active-project/{{ $value->id }}" title="Quản lý lỗi"><i class="glyphicon glyphicon-info-sign"></i></a>&nbsp;

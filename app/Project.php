@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use App\Helpers\Utils;
+use App\Invite;
 
 class Project extends Model
 {
@@ -14,10 +17,18 @@ class Project extends Model
         return $this->belongsTo('App\Models\User', 'lead_id', 'id');
     }
 
-	public static function getAllProject($getColumns = [])
+	public static function getAllProjectOfUser($getColumns = [])
 	{
-		$result = self::select($getColumns)->get();
-		return $result;
+		$builder = self::select($getColumns)
+			->leftJoin('invite', 'invite.proj_id', '=', 'project.id')
+			->where('lead_id', Auth::user()->id)
+			->orWhere(function ($builder) {
+                $builder->where('user_receive_id', '=', Auth::user()->id);
+                $builder->where('type', '=', 2);
+            })
+            ->distinct('project.id')
+			->get();
+		return $builder;
 	}
 
 	public static function getFirstLetterName($projectId = 0)
@@ -29,7 +40,7 @@ class Project extends Model
 		if (empty($result)) {
 			return "";
 		}
-		$arrString = explode(" ", $result->name);
-		return count($arrString) > 1 ? $arrString[0][0] . $arrString[0][1] : $arrString[0][0];
+		$arrString = explode(" ", Utils::stripVN(html_entity_decode($result->name)));
+		return count($arrString) > 1 ? $arrString[0][0] . $arrString[1][0] : $arrString[0][0];
 	}
 }

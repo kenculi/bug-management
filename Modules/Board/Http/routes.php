@@ -18,10 +18,8 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
     Route::post('/add-comment', 'IssueController@addComment');
 
     Route::get('/browse/{id}', 'IssueController@browseIssue')->where('id', '[0-9]+');
-
     Route::get('/announce', 'BoardController@closeIframe');
 
     Route::get('/create-status', 'IssueStatusController@createStatus')->where('id', '[0-9]+');
     Route::post('/create-status', 'IssueStatusController@createStatus')->where('id', '[0-9]+');
-
 });

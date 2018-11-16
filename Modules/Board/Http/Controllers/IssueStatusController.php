@@ -28,7 +28,7 @@ class IssueStatusController extends Controller
                 return redirect()->back()->withInput()->withErrors(['name'=> 'Nhập tên trạng thái!']);
             }
 
-			$sequence = IssueStatus::where('proj_id', $params['projectId'])->max('sequence');			
+			$sequence = IssueStatus::where('proj_id', $params['projectId'])->max('sequence');
 			$insertStatus = [
                 "proj_id"       => (int)$params['projectId'],
                 "name"      	=> $params['name'],
@@ -41,9 +41,9 @@ class IssueStatusController extends Controller
             \Session::flash('success', 'Tạo thành công trạng thái mới!');
             return view('board::close-iframe')->with('message','');
 		} else {
-			$projects = Project::getAllProject(['id', 'name']);
+			$projects = Project::getAllProjectOfUser(['project.id', 'name']);
 			return view('board::create-issue-status')->with("projects", $projects);
 		}
-		
+
 	}
 }
