@@ -32,7 +32,7 @@ class BoardController extends Controller
         $projectId = \Cookie::has('projectId') ? \Cookie::get('projectId') : 0;
         $project = Project::where('id', $projectId)->select('name')->first();
 
-        $project_name = !empty($project->name) ? $project->name : "Unknow";
+        $project_name = !empty($project->name) ? $project->name : "Bảng";
 
         $issue_status = IssueStatus::getStatusByProjectID($projectId);
 
