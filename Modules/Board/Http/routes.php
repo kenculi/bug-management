@@ -22,4 +22,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
 
     Route::get('/create-status', 'IssueStatusController@createStatus')->where('id', '[0-9]+');
     Route::post('/create-status', 'IssueStatusController@createStatus')->where('id', '[0-9]+');
+
+    Route::post('/attach-file', 'IssueController@attachFile');
+    Route::get('/download-file/{fileName}', 'IssueController@downloadFile');
 });

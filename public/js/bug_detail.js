@@ -22,6 +22,10 @@ $('#txtComment').on("click", function() {
 	}
 });
 
+$('#attachButton').on("click", function() {
+    $('input[name="attachFile"]').click();
+});
+
 function updateDesc(issueId) {
 	var desc = $("#txtDesc").val();
 	$.ajax({
@@ -124,4 +128,30 @@ function changeActivity(object) {
 
 function cancelUpdate(object) {
 	object.parentElement.innerHTML = "";
+}
+
+function uploadAttachment() {
+    var attachment = document.getElementById('attachFile');
+    var data = new FormData();
+    data.append('attachment', attachment.files[0]);
+    data.append('_token', TOKEN);
+    data.append('issueId', issueId);
+
+    $.ajax({
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: data,
+        url: "/board/attach-file",
+        success: function (response) {
+            if (!response['error']) {
+                toastr["success"]('Tải tập tin đính kèm thành công');
+                window.location.reload();
+            }
+        }
+    });
+}
+
+function downloadFile(fileName) {
+    document.getElementById('downloadIframe').src = "/board/download-file/"+fileName;
 }

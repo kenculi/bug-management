@@ -30,7 +30,10 @@
 @section('content')
 <div class="modal-header">
     <button type="button" class="close btn-cancel" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="padding-right-10"><i class="fa fa-ellipsis-h"></i></span></button>
+    {{-- <button type="button" class="close dropdown-toggle" data-toggle="dropdown"><span class="padding-right-10"><i class="fa fa-ellipsis-h"></i></span></button>
+    <ul class="dropdown-menu pull-right" role="menu">
+        <li><a href="#">Xóa lỗi</a></li>
+    </ul> --}}
     <h4 class="modal-title" id="myModalLabel">
         <span class="projTitle"><a target="_blank" href="/board/browse/{{ $bugDetail->id }}"> {{ !empty($bugDetail) ? $firstLetter . $bugDetail->id : "" }}</a></span>
     </h4>
@@ -42,7 +45,8 @@
         <div class="col-md-7 col-xs-7">
             <h3>{{ $bugDetail->summary }}</h3>
             <p>
-                <button class="btn btn-sm btn-default" title="Attach file"><i class="glyphicon glyphicon-paperclip"></i></button>
+                <input type="file" name="attachFile" id="attachFile" style="display: none" onchange="uploadAttachment()">
+                <button class="btn btn-sm btn-default" title="Attach file" id="attachButton"><i class="glyphicon glyphicon-paperclip"></i></button>
                 <button class="btn btn-sm btn-default" title="Copy issue"><i class="fa fa-clone"></i></button>
                 <button class="btn btn-sm btn-default" title="Link issue"><i class="glyphicon glyphicon-link"></i></button>
             </p>
@@ -50,6 +54,26 @@
                 <textarea id="txtDesc" class="form-control" placeholder="Nhập mô tả ...">{{ $bugDetail->description }}</textarea>
                 <div id="descActions"></div>
             </div>
+
+            @if ($bugDetail->attachment)
+            <div>
+                <h4>Đính kèm</h4>
+                @php
+                    $arrAttachment = unserialize($bugDetail->attachment);
+                @endphp
+                    <divul class="todo-list">
+                    @foreach ($arrAttachment as $value)
+                        <li>
+                            <span class="text"><a href="" onclick="downloadFile('{{ $value }}')">{{ $value }}</a></span>
+                            <div class="tools">
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                    @endforeach
+                    </ul>
+            </div>
+            @endif
+
             <div class="form-group">
                 <div class="row flex-display">
                     <h4 class="col-md-3 col-xs-3">Hoạt động</h4>
@@ -61,6 +85,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="commentBox">
                 <div class="form-group">
                     <div class="row">
@@ -85,6 +110,7 @@
                     @endforeach
                 </div>
             </div>
+
             <div id="historyBox">
                 @if (!empty($history))
                 <div class="chat">
@@ -199,6 +225,7 @@
         @endif
     </div>
 </div>
+<iframe id="downloadIframe" style="display:none;"></iframe>
 @stop
 @section('script')
     <script type="text/javascript">
