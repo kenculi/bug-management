@@ -44,7 +44,7 @@ class IssueController extends Controller
 
         return view('board::browse-issue')
             ->with("bugDetail", $findBug)
-            ->with("firstLetter", $firstLetter)
+            ->with("firstLetter", strtoupper($firstLetter))
             ->with("reporter", $reporter)
             ->with("assignees", $assignees)
             ->with("priorities", $priorities)
@@ -239,6 +239,44 @@ class IssueController extends Controller
             }
             return response()->json(['error' => 1]);
         }
+    }
+
+    public function deleteAttachment(Request $request)
+    {
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            $issueId = (int)$params['issueId'];
+            $fileName = trim($params['fileName']);
+            $findIssue = Issue::find($issueId);
+            $oldAttachment = $findIssue->attachment;
+
+            if ($fileName && $oldAttachment) {
+                $existFile = \Storage::disk('local')->exists('attachment/' . $fileName);
+                if ($existFile) {
+                    $newAttachment = unserialize($oldAttachment);
+                    if (($key = array_search($fileName, $newAttachment)) !== false) {
+                        unset($newAttachment[$key]);
+                    }
+                    $findIssue->attachment = serialize($newAttachment);
+                    $findIssue->save();
+
+                    //Write log
+                    $logContent = [
+                        'issue_id'  => $issueId,
+                        'field'     => 7, //Attachment
+                        'note'      => $oldAttachment . " -> " . $findIssue->attachment
+                    ];
+                    \ActivityLog::writeLog($logContent, 2);
+                }
+                return response()->json(['error' => 0]);
+            }
+            return response()->json(['error' => 1]);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        return view("board::search");
     }
 
     public function downloadFile(Request $request)

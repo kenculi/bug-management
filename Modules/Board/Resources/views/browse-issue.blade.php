@@ -46,9 +46,29 @@
                 <textarea id="txtDesc" class="form-control" placeholder="Nhập mô tả...">{{ $bugDetail->description }}</textarea>
                 <div id="descActions"></div>
             </div>
+
+            @if ($bugDetail->attachment)
+            <div>
+                <h4>Đính kèm</h4>
+                @php
+                    $arrAttachment = unserialize($bugDetail->attachment);
+                @endphp
+                    <divul class="todo-list">
+                    @foreach ($arrAttachment as $value)
+                        <li>
+                            <span class="text"><a href="" onclick="downloadFile('{{ $value }}')">{{ $value }}</a></span>
+                            <div class="tools">
+                                <i class="fa fa-trash-o" onclick="deleteAttachment('{{ $value }}')"></i>
+                            </div>
+                        </li>
+                    @endforeach
+                    </ul>
+            </div>
+            @endif
+
             <div class="form-group">
                 <div class="row flex-display">
-                    <h4 class="col-md-2 col-xs-2">Activities</h4>
+                    <h4 class="col-md-2 col-xs-2">Hoạt động</h4>
                     <div class="col-md-10 col-xs-10 flex-center flex-right">
                         <select name="slbActivities" class="slbActivities" onchange="changeActivity(this)">
                             <option value="1">Bình luận</option>

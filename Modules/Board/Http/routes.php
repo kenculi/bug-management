@@ -25,4 +25,10 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
 
     Route::post('/attach-file', 'IssueController@attachFile');
     Route::get('/download-file/{fileName}', 'IssueController@downloadFile');
+    Route::post('/delete-attachment', 'IssueController@deleteAttachment');
+});
+
+Route::group(['middleware' => ['web','auth'], 'prefix' => 'search', 'namespace' => 'Modules\Board\Http\Controllers'], function()
+{
+    Route::get('/', 'IssueController@search');
 });

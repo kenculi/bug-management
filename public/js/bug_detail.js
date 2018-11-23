@@ -145,7 +145,6 @@ function uploadAttachment() {
         url: "/board/attach-file",
         success: function (response) {
             if (!response['error']) {
-                toastr["success"]('Tải tập tin đính kèm thành công');
                 window.location.reload();
             }
         }
@@ -154,4 +153,20 @@ function uploadAttachment() {
 
 function downloadFile(fileName) {
     document.getElementById('downloadIframe').src = "/board/download-file/"+fileName;
+}
+
+function deleteAttachment(fileName) {
+    if (confirm("Bạn có chắc xóa tập tin này?")) {
+        console.log("huhu");
+        $.ajax({
+            type: 'POST',
+            data: { "issueId": issueId, "fileName": fileName, "_token": TOKEN },
+            url: "/board/delete-attachment",
+            success: function (response) {
+                if (!response['error']) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
 }

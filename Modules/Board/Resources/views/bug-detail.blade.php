@@ -61,12 +61,12 @@
                 @php
                     $arrAttachment = unserialize($bugDetail->attachment);
                 @endphp
-                    <divul class="todo-list">
+                    <ul class="todo-list">
                     @foreach ($arrAttachment as $value)
                         <li>
                             <span class="text"><a href="" onclick="downloadFile('{{ $value }}')">{{ $value }}</a></span>
                             <div class="tools">
-                                <i class="fa fa-trash-o"></i>
+                                <i class="fa fa-trash-o" onclick="deleteAttachment('{{ $value }}')"></i>
                             </div>
                         </li>
                     @endforeach

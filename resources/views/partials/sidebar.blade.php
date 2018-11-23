@@ -11,6 +11,7 @@
     </li> --}}
     <li><a href="/project"><i class="fa fa-list"></i> <span>Dự án</span></a></li>
     <li><a href="/board"><i class="fa fa-list-alt"></i> <span>Bảng</span></a></li>
+    <li><a href="/search"><i class="fa fa-search"></i> <span>Tìm kiếm</span></a></li>
     {{-- <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
