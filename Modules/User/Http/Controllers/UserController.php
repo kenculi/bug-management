@@ -2,9 +2,13 @@
 
 namespace Modules\User\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -12,9 +16,10 @@ class UserController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('user::index');
+        $countryList = Country::getAll();
+        return view('user::index')->with('countryList', $countryList);
     }
 
     /**
@@ -48,9 +53,42 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      * @return Response
      */
-    public function edit()
+    public function edit(Request $request)
     {
-        return view('user::edit');
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            $userId = $params['userId'];
+            $type = (int)$params['type'];
+            if($type == 1) {
+                User::where('id', (int)$userId)->update(['nation' => $params['country']]);
+            } else if($type == 2){
+                $validatedData = Validator::make($params, [
+                    'email' => 'required|string|email|max:255|unique:users'
+                ]);
+                if ($validatedData->fails()) {
+                    return response()->json([
+                        'error' => true,
+                        'message' => $validatedData->errors()
+                    ], 200);
+                }
+                User::where('id', (int)$userId)->update(['email' => $params['email']]);
+            } else if($type == 3){
+                $validatedData = Validator::make($params, [
+                    'passwordOld' => 'required|string|current_password',
+                    'passwordNew' => 'required|string|min:6'
+                ]);
+                if ($validatedData->fails()) {
+                    return response()->json([
+                        'error' => true,
+                        'message' => $validatedData->errors()
+                    ], 200);
+                }
+                User::where('id', (int)$userId)->update(['password' => bcrypt($params['passwordNew'])]);
+            }
+        }
+
+        $countryList = Country::getAll();
+        return view('user::index')->with('countryList', $countryList);
     }
 
     /**
@@ -60,6 +98,14 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        $params = $request->all();
+
+        $filename = $params['filepath']->file->getClientOriginaName();
+
+        echo $params;
+
+        // var_dump($params['filepath']->file->storeAs('', $filename));die;
+        
     }
 
     /**

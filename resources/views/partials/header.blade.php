@@ -22,14 +22,14 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="{{ asset("images/icons_user.svg") }}" class="user-image" alt="User Image">
+                        <img src="{{ asset(Auth::user()->avatar) }}" class="user-image" alt="User Image">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{{ Auth::user()->full_name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="{{ asset("images/icons_user.svg") }}" class="img-circle" alt="User Image">
+                            <img src="{{ asset(Auth::user()->avatar) }}" class="img-circle" alt="User Image">
 
                             <p>
                                 {{ Auth::user()->full_name }}
@@ -38,7 +38,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Thông tin cá nhân</a>
+                                <a href="{{ url('/user') }}" class="btn btn-default btn-flat">Thông tin cá nhân</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Thoát</a>
