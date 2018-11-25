@@ -31,4 +31,5 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
 Route::group(['middleware' => ['web','auth'], 'prefix' => 'search', 'namespace' => 'Modules\Board\Http\Controllers'], function()
 {
     Route::get('/', 'IssueController@search');
+    Route::post('/load-assignee-status', 'IssueController@loadAssigneeStatus');
 });

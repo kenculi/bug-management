@@ -4,46 +4,46 @@
 @section('content')
     <div class="box">
         <!-- /.box-header -->
-        <div class="box-header">
-            <div class="row">
-                <div class="form-group">
-                    <label for="summary" class="control-label">Tên lỗi</label>
-                    <div>
-                        <input type="text" class="form-control input-text-selectize" name="summary" id="summary" placeholder="Nhập tóm tắt lỗi" value="{{ old('summary') }}">
+        <div class="box-body">
+            <form action="" method="GET">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="summary" class="control-label">Tên lỗi</label>
+                            <div>
+                                <input type="text" class="form-control input-text-selectize" name="summary" id="summary" placeholder="Nhập tóm tắt lỗi" value="{{ old('summary') }}">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label for="projectId">Dự án <span class="requiredStar"></span></label>
-                    <select class="form-control" name="projectId" id="projectId">
-                        <option value="0">Tất cả</option>
-                        @foreach($projects as $project)
-                            <option value="{{ $project->id }}">{{ $project->name }}</option>
-                        @endforeach
-                    </select>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="projectId">Dự án</label>
+                        <select class="form-control" name="projectId" id="projectId" onchange="loadAssigneeAndStatus()">
+                            <option value="0">Tất cả</option>
+                            @foreach($projects as $project)
+                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="assignee">Người thực hiện</label>
+                        <select class="form-control" name="assignee" id="assignee">
+                            <option value="0">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="status">Trạng thái</label>
+                        <select class="form-control" name="status" id="status">
+                            <option value="0">Tất cả</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="assignee">Người thực hiện</label>
-                    <select class="form-control" name="assignee" id="assignee">
-                        <option value="0">Tất cả</option>
-                        @foreach($assignees as $assignee)
-                            <option value="{{ $assignee->userinvited->id }}">{{ $assignee->userinvited->full_name }}</option>
-                        @endforeach
-                    </select>
+                <div class="row col-md-4">
+                    <button type="submit" class="btn btn-info btn-md" title="Tìm kiếm"> Tìm kiếm</button>
                 </div>
-                <div class="form-group">
-                    <label for="assignee">Trạng thái</label>
-                    <select class="form-control slbActivities" name="projectId" id="projectId">
-                        <option value="0">Tất cả</option>
-                        @foreach($issueStatus as $status)
-                            <option {{ $selected }} value="{{ $status->id }}">{{ $status->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="box-body">
+            </form>
+
             @if(!empty($issueList))
                 <div class="scroll-box">
                 <table class="table my-table table-striped table-bordered" cellspacing="0">
@@ -81,4 +81,8 @@
 @stop
 
 @section('script')
+    <script type="text/javascript">
+            var TOKEN = "{{ csrf_token() }}";
+        </script>
+    <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 @stop

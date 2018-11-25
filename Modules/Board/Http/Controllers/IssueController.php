@@ -276,7 +276,29 @@ class IssueController extends Controller
 
     public function search(Request $request)
     {
-        return view("board::search");
+        $projects = Project::getAllProjectOfUser(['project.id', 'name']);
+        return view("board::search")
+            ->with('projects', $projects);
+    }
+
+    public function loadAssigneeStatus(Request $request)
+    {
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            $projectId = (int)$params['projectId'];
+
+            $issueStatus = IssueStatus::getStatusByProjectID($projectId);
+            $assignees = Invite::getAllByProjectAndType($projectId, ['2']);
+            foreach ($assignees as $key => $value) {
+                $assignees[$key]['full_name'] = $value->userinvited->full_name; 
+            }
+
+            return response()->json([
+                'error'     => 0, 
+                'assignees' => $assignees,
+                'status'    => $issueStatus,
+            ]);
+        }
     }
 
     public function downloadFile(Request $request)
