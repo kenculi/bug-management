@@ -277,8 +277,73 @@ class IssueController extends Controller
     public function search(Request $request)
     {
         $projects = Project::getAllProjectOfUser(['project.id', 'name']);
+
+        // $params = $request->all();
+        // $limit = isset($params['limit']) ? (int) $params['limit'] : 10;
+        // $order = isset($params['order']) ? $params['order'] : 'issue.created_at';
+        // $dir = isset($params['dir']) ? $params['dir'] : 'DESC';
+
+        // $issueList = Issue::getIssueList([
+        //     'limit'         => $limit,
+        //     'order'         => $order,
+        //     'dir'           => $dir
+        // ]);
+
         return view("board::search")
             ->with('projects', $projects);
+            // ->with('issueList', $issueList);
+    }
+
+    public function ajaxLoadData(Request $request)
+    {
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+
+            $columns = [
+                0 => "project.name",
+                1 => "",
+                2 => "summary",
+                3 => "",
+                4 => "users.full_name",
+                5 => "issue.created_at",
+            ];
+
+            $limit = isset($params['length']) ? (int)$params['length'] : 10;
+            $offset = isset($params['start']) ? (int)$params['start'] : 0;
+            $order = isset($params['order'][0]['column']) ? $columns[$params['order'][0]['column']] : $columns[5];
+            $dir = isset($params['order'][0]['dir']) ? $params['order'][0]['dir'] : "DESC";
+            $options = [
+                'limit'         => $limit,
+                'offset'        => $offset,
+                'order'         => $order,
+                'dir'           => $dir,
+                'data'          => $params['data']
+            ];
+
+            $builder = Issue::getIssueBuilder($options);
+            $total = $builder->count();
+            $result = Issue::getIssueList($builder, $options);
+
+            $data = [];
+            foreach ($result as $value) {
+                $nestedData["projectName"] = $value->name;
+                $nestedData["issueCode"] = strtoupper($value->getIssueCode());
+                $nestedData["summary"] = $value->summary;
+                $nestedData["statusName"] = $value->status->name;
+                $nestedData["assignee"] = $value->getFullNameById();
+                $nestedData["created_at"] = $value->issue_created_at;
+                $data[] = $nestedData;
+            }
+
+            $json_data = [
+                'draw'              => (int)$params['draw'],
+                'recordsTotal'      => (int)$total,
+                'recordsFiltered'   => (int)$total,
+                'data'              => $data
+            ];
+            // var_dump($json_data);die;
+            return response()->json($json_data);
+        }
     }
 
     public function loadAssigneeStatus(Request $request)
@@ -290,11 +355,11 @@ class IssueController extends Controller
             $issueStatus = IssueStatus::getStatusByProjectID($projectId);
             $assignees = Invite::getAllByProjectAndType($projectId, ['2']);
             foreach ($assignees as $key => $value) {
-                $assignees[$key]['full_name'] = $value->userinvited->full_name; 
+                $assignees[$key]['full_name'] = $value->userinvited->full_name;
             }
 
             return response()->json([
-                'error'     => 0, 
+                'error'     => 0,
                 'assignees' => $assignees,
                 'status'    => $issueStatus,
             ]);

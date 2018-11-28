@@ -32,4 +32,5 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'search', 'namespace' 
 {
     Route::get('/', 'IssueController@search');
     Route::post('/load-assignee-status', 'IssueController@loadAssigneeStatus');
+    Route::post('/ajax-load-data', 'IssueController@ajaxLoadData');
 });

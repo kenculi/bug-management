@@ -55,22 +55,22 @@
                 <div id="descActions"></div>
             </div>
 
-            @if ($bugDetail->attachment)
+            @if (!empty($bugDetail->attachment))
             <div>
                 <h4>Đính kèm</h4>
                 @php
                     $arrAttachment = unserialize($bugDetail->attachment);
                 @endphp
-                    <ul class="todo-list">
-                    @foreach ($arrAttachment as $value)
-                        <li>
-                            <span class="text"><a href="" onclick="downloadFile('{{ $value }}')">{{ $value }}</a></span>
-                            <div class="tools">
-                                <i class="fa fa-trash-o" onclick="deleteAttachment('{{ $value }}')"></i>
-                            </div>
-                        </li>
-                    @endforeach
-                    </ul>
+                <ul class="todo-list">
+                @foreach ($arrAttachment as $value)
+                    <li>
+                        <span class="text"><a href="" onclick="downloadFile('{{ $value }}')">{{ $value }}</a></span>
+                        <div class="tools">
+                            <i class="fa fa-trash-o" onclick="deleteAttachment('{{ $value }}')"></i>
+                        </div>
+                    </li>
+                @endforeach
+                </ul>
             </div>
             @endif
 
