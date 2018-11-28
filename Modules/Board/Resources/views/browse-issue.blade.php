@@ -38,7 +38,8 @@
         <div class="col-md-7 col-xs-7">
             <h3>{{ $bugDetail->summary }}</h3>
             <p>
-                <button class="btn btn-sm btn-default" title="Attach file"><i class="glyphicon glyphicon-paperclip"></i></button>
+                <input type="file" name="attachFile" id="attachFile" style="display: none" onchange="uploadAttachment()">
+                <button class="btn btn-sm btn-default" title="Attach file" id="attachButton"><i class="glyphicon glyphicon-paperclip"></i></button>
                 <button class="btn btn-sm btn-default" title="Copy issue"><i class="fa fa-clone"></i></button>
                 <button class="btn btn-sm btn-default" title="Link issue"><i class="glyphicon glyphicon-link"></i></button>
             </p>
@@ -47,13 +48,13 @@
                 <div id="descActions"></div>
             </div>
 
-            @if ($bugDetail->attachment)
+            @if (!empty($bugDetail->attachment))
             <div>
                 <h4>Đính kèm</h4>
                 @php
                     $arrAttachment = unserialize($bugDetail->attachment);
                 @endphp
-                    <divul class="todo-list">
+                    <ul class="todo-list">
                     @foreach ($arrAttachment as $value)
                         <li>
                             <span class="text"><a href="" onclick="downloadFile('{{ $value }}')">{{ $value }}</a></span>
@@ -205,6 +206,7 @@
         </div>
     </div>
 </div>
+<iframe id="downloadIframe" style="display:none;"></iframe>
 @stop
 @section('script')
     <script type="text/javascript">

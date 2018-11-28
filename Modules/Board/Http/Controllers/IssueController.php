@@ -327,7 +327,7 @@ class IssueController extends Controller
             $data = [];
             foreach ($result as $value) {
                 $nestedData["projectName"] = $value->name;
-                $nestedData["issueCode"] = strtoupper($value->getIssueCode());
+                $nestedData["issueCode"] = "<a href='/board/browse/{$value->id}' target='_blank'>" . strtoupper($value->getIssueCode()) . "</a>";
                 $nestedData["summary"] = $value->summary;
                 $nestedData["statusName"] = $value->status->name;
                 $nestedData["assignee"] = $value->getFullNameById();
@@ -341,7 +341,6 @@ class IssueController extends Controller
                 'recordsFiltered'   => (int)$total,
                 'data'              => $data
             ];
-            // var_dump($json_data);die;
             return response()->json($json_data);
         }
     }

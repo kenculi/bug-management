@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Project;
 use App\Label;
@@ -61,6 +62,17 @@ class Issue extends Model
             ->leftJoin('users', 'users.id', '=', 'assignee');
         if ($options['data']) {
             parse_str($options['data'], $data);
+
+            $builder->leftJoin('invite', 'invite.proj_id', '=', 'project.id')
+                ->where(function($builder) use ($data) {
+                    $builder->where('lead_id', Auth::user()->id)
+                        ->orWhere(function ($builder) use ($data) {
+                            $builder->where('user_receive_id', '=', Auth::user()->id);
+                            $builder->where('invite.type', '=', 2);
+                        });
+                    $builder->where('invite.proj_id', '=', (int)$data['projectId']);
+                }); 
+
             if (!empty($data['summary'])) {
                 $builder->where('summary', 'like', '%'.$data['summary'].'%');
             }
@@ -72,7 +84,7 @@ class Issue extends Model
             }
 
             if (!empty($data['projectId'])) {
-                $builder->where('proj_id', (int)$data['projectId']);
+                $builder->where('issue.proj_id', (int)$data['projectId']);
             }
 
             if (!empty($data['assignee'])) {
