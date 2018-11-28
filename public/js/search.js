@@ -72,7 +72,7 @@ function ajaxLoadData() {
         "ajax": {
             "url": "/search/ajax-load-data",
             "type": "POST",
-            "data": {"_token": TOKEN, "data": $('#formSearch').serialize()}
+            "data": {"data": $('#formSearch').serialize()}
         },
         "columns":[
             {"data" : "projectName"},

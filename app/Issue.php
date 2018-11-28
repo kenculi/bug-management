@@ -56,7 +56,7 @@ class Issue extends Model
 
     public static function getIssueBuilder($options)
     {
-        $builder = self::selectRaw('*, issue.created_at as issue_created_at')
+        $builder = self::selectRaw('*, issue.created_at as issue_created_at, issue.id as id')
             ->leftJoin('project', 'project.id', '=', 'proj_id')
             ->leftJoin('users', 'users.id', '=', 'assignee');
         if ($options['data']) {
