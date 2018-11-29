@@ -354,7 +354,7 @@ class IssueController extends Controller
             $issueStatus = IssueStatus::getStatusByProjectID($projectId);
             $assignees = Invite::getAllByProjectAndType($projectId, ['2']);
             foreach ($assignees as $key => $value) {
-                $assignees[$key]['full_name'] = $value->userinvited->full_name;
+                $assignees[$key]['full_name'] = $value->getUserInvited()->full_name;
             }
 
             return response()->json([

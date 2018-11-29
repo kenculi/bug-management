@@ -29,7 +29,10 @@
             <label for="projectId">Dự án <span class="requiredStar"></span></label>
             <select class="form-control" name="projectId" id="projectId">
                 @foreach($projects as $project)
-                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @php
+                    $selected = $project->id == $projectId ? "selected" : "";
+                @endphp
+                    <option {{ $selected }} value="{{ $project->id }}">{{ $project->name }}</option>
                 @endforeach
             </select>
             <span class="text-danger">{{ $errors->first('projectId') }}</span>

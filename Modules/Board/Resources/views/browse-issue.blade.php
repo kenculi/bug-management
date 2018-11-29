@@ -90,7 +90,7 @@
                 <div class="chat" id="box-comment">
                     @foreach($comments as $comment)
                     <div class="item">
-                        <img src="/images/icons_user.svg" alt="user image" class="img-circle">
+                        <img src="{{ asset('images/avatar/'.$comment->usercommented->avatar) }}" alt="user image" class="img-circle">
                         <p class="message">
                             <a href="#" class="name">
                                 <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{ $comment->created_at }}</small>
@@ -107,7 +107,7 @@
                 <div class="chat">
                     @foreach($history as $value)
                     <div class="item">
-                        <img src="/images/icons_user.svg" alt="user image" class="img-circle">
+                        <img src="{{ asset('images/avatar/'.$value->userloged->avatar) }}" alt="user image" class="img-circle">
                         <p class="message">
                             <span href="#" class="name">
                                 <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> {{ $value->created_at }}</small>
@@ -139,7 +139,10 @@
                     <div class="form-group">
                         <div class="row flex-display">
                             <div class="col-md-2 col-xs-2">
-                                <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
+                                @php
+                                    $assigneeAvatar = !empty($bugDetail->assigneeinfo) ? $bugDetail->assigneeinfo->avatar : "icons_user.svg";
+                                @endphp
+                                <img src="{{ asset('images/avatar/'.$assigneeAvatar) }}" class="img-circle avatar-image" alt="User Image">
                             </div>
                             <div class="col-md-10 col-xs-10 flex-center">
                                 <select class="form-control" name="assignee" id="assignee" onchange="updateAssignee(this)">
@@ -148,7 +151,7 @@
                                     @php
                                         $selected = $bugDetail->assignee == $assignee->id ? "selected" : "";
                                     @endphp
-                                        <option {{ $selected }} value="{{ $assignee->userinvited->id }}">{{ $assignee->userinvited->full_name }}</option>
+                                        <option {{ $selected }} value="{{ $assignee->getUserInvited()->id }}">{{ $assignee->getUserInvited()->full_name }}</option>
                                     @endforeach
                                     {{ !empty($assignee->full_name) ? $assignee->full_name : "N/A" }}
                                 </select>
@@ -161,7 +164,7 @@
                     <div class="form-group">
                         <div class="row flex-display">
                             <div class="col-md-2 col-xs-2">
-                                <img src="/images/icons_user.svg" class="img-circle" alt="User Image">
+                                <img src="{{ asset('images/avatar/'.$reporter->avatar) }}" class="img-circle avatar-image" alt="User Image">
                             </div>
                             <div class="col-md-10 col-xs-10 flex-center">
                                 {{ !empty($reporter->full_name) ? $reporter->full_name : "N/A" }}

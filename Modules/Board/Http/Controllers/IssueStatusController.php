@@ -17,6 +17,7 @@ class IssueStatusController extends Controller
 {
 	public function createStatus(Request $request)
 	{
+        $projectId = \Cookie::has('projectId') ? \Cookie::get('projectId') : 0;
 		if ($request->isMethod('post')) {
 			$params = $request->all();
 
@@ -42,8 +43,9 @@ class IssueStatusController extends Controller
             return view('board::close-iframe')->with('message','');
 		} else {
 			$projects = Project::getAllProjectOfUser(['project.id', 'name']);
-			return view('board::create-issue-status')->with("projects", $projects);
+			return view('board::create-issue-status')
+                ->with('projectId', $projectId)
+                ->with("projects", $projects);
 		}
-
 	}
 }

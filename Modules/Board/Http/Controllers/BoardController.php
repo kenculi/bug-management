@@ -35,6 +35,7 @@ class BoardController extends Controller
         $project_name = !empty($project->name) ? $project->name : "Bảng";
 
         $issue_status = IssueStatus::getStatusByProjectID($projectId);
+        $invited = Invite::getAllByProjectAndType($projectId, ['2']);
 
         $queryBuilder = Issue::where('proj_id', $projectId);
         if (!empty($params['keyword'])) {
@@ -44,7 +45,7 @@ class BoardController extends Controller
         $issues = $queryBuilder->get();
         $request->flash();
 
-        return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_status' => $issue_status, 'projectId' => $projectId]);
+        return view('board::index', ['project_name' => $project_name, 'issues' => $issues, 'issue_status' => $issue_status, 'projectId' => $projectId, 'invited' => $invited]);
     }
 
     public function closeIframe()
@@ -175,6 +176,7 @@ class BoardController extends Controller
         }
 
         return view('board::create-issue')
+            ->with('projectId', $projectId)
             ->with('projects', $projects)
             ->with('linkedIssueTypes', $linkedIssueTypes)
             ->with('issues', $issues)

@@ -58,8 +58,9 @@
                 </form>
             </div>
             <div class="col-md-2">
-                <img src="{{ asset('images/icons_user.svg') }}" width="30px" class="img-circle" alt="User Image">
-                <img src="{{ asset('images/add_user_icon.svg') }}" width="30px" class="img-circle" alt="Add member">
+                @foreach($invited as $value)
+                    <img src="{{ asset('images/avatar/'.$value->getUserInvited()->avatar) }}" width="30px" height="30px" class="img-circle" alt="User Image" title="{{ $value->getUserInvited()->full_name }}">
+                @endforeach
             </div>
         </div>
 

@@ -29,7 +29,10 @@
             <label for="projectId">Dự án <span class="requiredStar"></span></label>
             <select class="form-control" name="projectId" id="projectId">
                 @foreach($projects as $project)
-                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @php
+                    $selected = $project->id == $projectId ? "selected" : "";
+                @endphp
+                    <option {{ $selected }} value="{{ $project->id }}">{{ $project->name }}</option>
                 @endforeach
             </select>
             <span class="text-danger">{{ $errors->first('projectId') }}</span>
@@ -80,7 +83,7 @@
             <select class="form-control" name="assignee" id="assignee">
                 <option value="0">Không chỉ định</option>
                 @foreach($assignees as $assignee)
-                    <option value="{{ $assignee->userinvited->id }}">{{ $assignee->userinvited->full_name }}</option>
+                    <option value="{{ $assignee->getUserInvited()->id }}">{{ $assignee->getUserInvited()->full_name }}</option>
                 @endforeach
             </select>
             <span class="text-danger">{{ $errors->first('assignee') }}</span>

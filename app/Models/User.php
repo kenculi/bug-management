@@ -42,6 +42,9 @@ class User extends Authenticatable
         $builder = self::select(DB::raw("users.id, email"))
             ->whereNotIn('users.id',function($query) use ($projectId) {
                $query->select('user_receive_id')->from('invite')->where("proj_id", (int)$projectId);
+            })
+            ->whereNotIn('users.id',function($query) use ($projectId) {
+               $query->select('user_send_id')->from('invite')->where("proj_id", (int)$projectId);
             });
 
         return $builder->get();

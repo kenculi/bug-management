@@ -27,13 +27,13 @@ class InviteController extends Controller
 			foreach ($invitedList as $value) {
 				switch ($value->type) {
 					case '1':
-						$pendingInvite[] = $value->userinvited->email;
+						$pendingInvite[] = $value->getUserInvited()->email;
 						break;
 					case '2':
-						$acceptedInvite[] = $value->userinvited->email;
+						$acceptedInvite[] = $value->getUserInvited()->email;
 						break;
 					case '3':
-						$deniedInvite[] = $value->userinvited->email;
+						$deniedInvite[] = $value->getUserInvited()->email;
 						break;
 				}
 			}
@@ -54,6 +54,12 @@ class InviteController extends Controller
 
             if (!empty($params['emailInvite'])) {
 	            foreach ($params['emailInvite'] as $invitedId) {
+	            	$checkExist = Invite::where("user_receive_id", $invitedId)->where("proj_id", $projectId)->first();
+	            	if (!empty($checkExist) || !is_numeric($invitedId)) {
+	            		\Session::flash('error', 'Thành viên không tồn tại hoặc đã mời!');
+		        		return view('board::close-iframe')->with('message','');
+	            	}
+
 	            	$newInvite = Invite::create([
 		                'proj_id'           => $projectId,
 		                'user_send_id'      => Auth::user()->id,

@@ -18,6 +18,11 @@ class Invite extends Model
         return $this->belongsTo('App\Models\User', 'user_receive_id', 'id');
     }
 
+    public function userlead()
+    {
+        return $this->belongsTo('App\Models\User', 'user_send_id', 'id');
+    }
+
     public static function getAllByProjectAndType($projectId = 0, $type = [])
 	{
 		$builder = self::select()
@@ -27,4 +32,13 @@ class Invite extends Model
         }
 		return $builder->get();
 	}
+
+    public function getUserInvited()
+    {
+        if (!$this->user_receive_id) {
+            return $this->userlead;
+        }
+
+        return $this->userinvited;
+    }
 }
