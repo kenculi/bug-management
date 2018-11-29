@@ -70,8 +70,10 @@ class Issue extends Model
                             $builder->where('user_receive_id', '=', Auth::user()->id);
                             $builder->where('invite.type', '=', 2);
                         });
-                    $builder->where('invite.proj_id', '=', (int)$data['projectId']);
-                }); 
+                    if (!empty($data['projectId'])) {
+                        $builder->where('invite.proj_id', '=', (int)$data['projectId']);
+                    }
+                });
 
             if (!empty($data['summary'])) {
                 $builder->where('summary', 'like', '%'.$data['summary'].'%');

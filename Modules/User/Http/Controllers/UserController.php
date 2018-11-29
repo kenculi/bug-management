@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         if ($request->isMethod('post') && Auth::check()) {
             $params = $request->all();
-            $userId = $params['userId'];
+            $userId = Auth::id();
             $type = (int)$params['type'];
             if($type == 1) {
                 User::where('id', (int)$userId)->update(['nation' => $params['country']]);
@@ -96,16 +96,22 @@ class UserController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function update(Request $request)
+    public function changeAvatar(Request $request)
     {
-        $params = $request->all();
-
-        $filename = $params['filepath']->file->getClientOriginaName();
-
-        echo $params;
-
-        // var_dump($params['filepath']->file->storeAs('', $filename));die;
-        
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            if ($request->hasFile('fileAvatar')) {
+                $path = $request->file('fileAvatar')->store('avatar', ['disk' => 'public_image']);
+                $arrPath = explode("/", $path);
+                if ($path) {
+                    $user = Auth::user();
+                    $user->avatar = end($arrPath);
+                    $user->save();
+                }
+                return response()->json(['error' => 0]);
+            }
+            return response()->json(['error' => 1]);
+        }
     }
 
     /**

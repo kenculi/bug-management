@@ -63,6 +63,10 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'public_image' => [
+            'driver' => 'local',
+            'root' => public_path() . '/images',
+        ],
     ],
 
 ];

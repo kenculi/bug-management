@@ -95,23 +95,20 @@
 @stop
 @section('content')
 
-	
+
     <div class="row">
         <div class="col-md-4">
             <div class="profile-img">
-                <img src="{{ asset(Auth::user()->avatar) }}" alt=""/>
-                <form>
-	                <div class="file btn btn-lg btn-primary">
-	                    Change Photo
-	                    <input type="file" name="file" id="file-avatar"/>
-	                </div>
-                </form>
+                <img src="{{ asset('images/avatar/'.Auth::user()->avatar) }}" alt=""/ for="file-avatar">
+                <div class="file btn btn-lg btn-primary">
+                    Change Photo
+                    <input type="file" name="file" id="file-avatar"/>
+                </div>
             </div>
         </div>
         {{ csrf_field() }}
-        <input type="hidden" class="" name="userId" value="{{ Auth::user()->id }}"/>
         <div class="col-md-8">
-			<div id="exTab2" class="container">	
+			<div id="exTab2" class="container">
 				<ul class="nav nav-tabs">
 					<li class="active">
 				        <a  href="#1" data-toggle="tab">Thông tin cá nhân</a>
@@ -250,16 +247,23 @@
 <script>
     $(".container-fluid").removeClass( "content container-fluid" )
     var TOKEN = "{{ csrf_token() }}";
-    var userId = $("input[name*='userId']").val();
+
     $("#file-avatar").change(function(){
-    	
-        var filepath = $('#file-avatar').val();
-        var filename = filepath.replace(/^.*[\\\/]/, '');
+	    var fileAvatar = document.getElementById('file-avatar');
+	    var data = new FormData();
+	    data.append('fileAvatar', fileAvatar.files[0]);
+	    data.append('_token', TOKEN);
+
         $.ajax({
             type: "POST",
-            data: { "filename": filename, "filepath": filepath, "userId": userId, "_token": TOKEN },
-            url: "/user/update",
+            contentType: false,
+        	processData: false,
+            data: data,
+            url: "/user/change-avatar",
             success: function(response) {
+            	if (!response['error']) {
+	                window.location.reload();
+	            }
             }
         });
 	});
@@ -269,9 +273,10 @@
 		var type = $(this).data("type");
   		$.ajax({
         	type: "POST",
-            data: { "country": country, "type": type, "userId": userId, "_token": TOKEN },
+            data: { "country": country, "type": type, "_token": TOKEN },
             url: "/user/user-edit",
             success: function(response) {
+            	toastr["success"]('Cập nhật thông tin cá nhân thành công');
             }
         });
 	});
@@ -281,15 +286,17 @@
 		var type = $(this).data("type");
   		$.ajax({
         	type: "POST",
-            data: { "email": emailNew, "type": type, "userId": userId, "_token": TOKEN },
+            data: { "email": emailNew, "type": type, "_token": TOKEN },
             url: "/user/user-edit",
             success: function(response) {
-            	if(response.error) 
+            	if(response.error)
         		{
             		var html = '';
 		            $.each(response.message, function(i, data) {
 		            		html += '<span class="text-danger">' + data[0] + '</span>';
-		            });	
+		            });
+        		} else {
+            		toastr["success"]('Cập nhật email thành công');
         		}
             	$('#errorEmail').empty().append(html);
             }
@@ -302,18 +309,19 @@
 		var type = $(this).data("type");
   		$.ajax({
         	type: "POST",
-            data: { "passwordOld": passwordOld, "passwordNew": passwordNew, "type": type, "userId": userId, "_token": TOKEN },
+            data: { "passwordOld": passwordOld, "passwordNew": passwordNew, "type": type, "_token": TOKEN },
             url: "/user/user-edit",
             success: function(response) {
-            	
-            	if(response.error) 
+            	if(response.error)
         		{
 		            $.each(response.message, function(i, data) {
 		            	var html = '';
 		            	html += '<span class="text-danger">' + data[0] + '</span>';
 		            	if(i === "passwordNew") $('#errorPasswordNew').empty().append(html);
 		            	if(i === "passwordOld") $('#errorPasswordOld').empty().append(html);
-		            });	
+		            });
+        		} else {
+        			toastr["success"]('Cập nhật mật khẩu thành công');
         		}
             }
         });

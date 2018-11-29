@@ -6,5 +6,5 @@ Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules
 
     Route::post('/user-edit', 'UserController@edit');
 
-    Route::post('/update', 'UserController@update');
+    Route::post('/change-avatar', 'UserController@changeAvatar');
 });
