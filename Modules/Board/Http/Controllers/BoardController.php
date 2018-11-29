@@ -151,10 +151,10 @@ class BoardController extends Controller
                 $insertIssue['assignee'] = (int)$params['assignee'];
             }
             if (!empty($params['linkedIssueType']) && !$params['issueId']) {
-                return redirect()->back()->withInput()->withErrors(['issueId'=> 'Must be chose with Issue link type']);
+                return redirect()->back()->withInput()->withErrors(['issueId'=> 'Phải chọn cùng loại lỗi liên kết']);
             }
             if (!$params['linkedIssueType'] && !empty($params['issueId'])) {
-                return redirect()->back()->withInput()->withErrors(['linkedIssueType'=> 'Must be chose with Issue']);
+                return redirect()->back()->withInput()->withErrors(['linkedIssueType'=> 'Phải chọn cùng lỗi liên kết']);
             }
 
             if (!empty($params['linkedIssueType']) && !empty($params['issueId'])) {

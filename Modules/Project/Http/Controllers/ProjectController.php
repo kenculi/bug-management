@@ -41,7 +41,7 @@ class ProjectController extends Controller
                             ->withInput();
             }
 
-            $newProjectId = Project::create(['name' => htmlentities(trim($params['projectName'])), 'lead_id' => Auth::user()->id]);
+            $newProjectId = Project::create(['name' => trim($params['projectName']), 'lead_id' => Auth::user()->id]);
             IssueStatus::addFourFirstStatus($newProjectId->id);
             Invite::create([
                 'proj_id'           => $newProjectId->id,

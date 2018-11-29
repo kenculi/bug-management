@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Project;
 use App\Label;
+use App\Priority;
 use Carbon\Carbon;
 
 class Issue extends Model
@@ -40,6 +41,28 @@ class Issue extends Model
 		return $result->full_name;
     }
 
+    public function getReporter()
+    {
+        if ($this->reporter == 0 || $this->reporter == null) {
+            return "";
+        }
+        $result = User::select("full_name")
+            ->where("id", (int)$this->reporter)
+            ->first();
+        return $result->full_name;
+    }
+
+    public function getPriority()
+    {
+        if ($this->priority_id == 0 || $this->priority_id == null) {
+            return "";
+        }
+        $result = Priority::select("name")
+            ->where("id", (int)$this->priority_id)
+            ->first();
+        return $result->name;
+    }
+
     public function getOldLabelName()
     {
         $arrLabel = explode(",", $this->label);
@@ -57,7 +80,7 @@ class Issue extends Model
 
     public static function getIssueBuilder($options)
     {
-        $builder = self::selectRaw('*, issue.created_at as issue_created_at, issue.id as id')
+        $builder = self::selectRaw('*, issue.created_at as issue_created_at, issue.updated_at as issue_updated_at, issue.id as id, issue.proj_id as proj_id')
             ->leftJoin('project', 'project.id', '=', 'proj_id')
             ->leftJoin('users', 'users.id', '=', 'assignee');
         if ($options['data']) {
@@ -102,9 +125,11 @@ class Issue extends Model
 
     public static function getIssueList($builder, $options)
     {
-        $builder->orderBy($options['order'], $options['dir'])
-            ->offset($options['offset'])
-            ->limit($options['limit']);
+        if (!empty($options['order'])) {
+            $builder->orderBy($options['order'], $options['dir'])
+                ->offset($options['offset'])
+                ->limit($options['limit']);
+        }
 
         return $builder->get();
     }
@@ -113,5 +138,20 @@ class Issue extends Model
     {
         $firstLetter = Project::getFirstLetterName($this->proj_id);
         return $firstLetter.$this->id;
+    }
+
+    public function getParentIssue()
+    {
+        $result = self::select("id")
+            ->where("issue_link", (int)$this->id)
+            ->get();
+        if(!$result)
+            return "";
+
+        $parentIds = [];
+        foreach ($result as $value) {
+            $parentIds[] = $value->id;
+        }
+        return implode(", ", $parentIds);
     }
 }

@@ -58,6 +58,19 @@ function loadAssigneeAndStatus() {
     });
 }
 
+function createReport() {
+    $.ajax({
+        type: "POST",
+        data: { "data": $('#formSearch').serialize(), "_token": TOKEN },
+        url: "/search/create-report",
+        success: function(response) {
+            if (!response['error']) {
+                document.getElementById('downloadIframe').src = "/board/download-file-delete/"+response['fileName'];
+            }
+        }
+    });
+}
+
 function ajaxLoadData() {
     $('#issuesTbl').DataTable({
         'destroy'       : true,

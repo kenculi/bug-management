@@ -365,9 +365,44 @@ class IssueController extends Controller
         }
     }
 
+    public function createReport(Request $request)
+    {
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            $options = [
+                'data' => $params['data']
+            ];
+
+            $builder = Issue::getIssueBuilder($options);
+            $result = Issue::getIssueList($builder, $options);
+
+            if ($result->count() > 0) {
+                $fileName   = 'report_'.time().'.csv';
+                $titleCsv = "Issue key\tIssue id\tParent id\tSummary\tAssignee\tReporter\tPriority\tStatus\tCreated\tUpdated\r\n";
+
+                $csv = $titleCsv;
+                foreach ($result as $key => $value) {
+                    $createdAt = new Carbon($value->issue_created_at);
+                    $updatedAt = new Carbon($value->issue_updated_at);
+                    $csv .= strtoupper($value->getIssueCode()) . "\t" . $value->id . "\t" . $value->getParentIssue() . "\t" . $value->summary . "\t" . $value->getFullNameById() . "\t" . $value->getReporter() . "\t" . $value->getPriority() . "\t" . $value->status->name . "\t" . $createdAt->format('d/m/Y H:i:s') . "\t" . $updatedAt->format('d/m/Y H:i:s') . "\r\n";
+                }
+                $csv = chr(255) . chr(254) . mb_convert_encoding($csv, "UTF-16LE", "UTF-8");
+                \Storage::disk('local')->put('report/' . $fileName, $csv);
+                return response()->json(['error' => 0, 'fileName' => $fileName]);
+            }
+        }
+        return response()->json(['error' => 1]);
+    }
+
     public function downloadFile(Request $request)
     {
         $fileName = trim($request->route('fileName'));
         return response()->download(storage_path("app/attachment/{$fileName}"));
+    }
+
+    public function downloadFileAndDelete(Request $request)
+    {
+        $fileName = trim($request->route('fileName'));
+        return response()->download(storage_path("app/report/{$fileName}"))->deleteFileAfterSend(true);
     }
 }

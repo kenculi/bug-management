@@ -56,30 +56,32 @@
                     </div>
                 </div>
                 <div class="row col-md-4">
-                    <button type="button" id="searchBtn" class="btn btn-info btn-md" title="Tìm kiếm"> Tìm kiếm</button>
+                    <button type="button" id="searchBtn" class="btn btn-info btn-md" title="Tìm kiếm"> Tìm kiếm</button>&nbsp;
+                    <button type="button" onclick="createReport()" class="btn btn-warning btn-md" title="Xuất dữ liệu"> Xuất dữ liệu</button>
                 </div>
             </form>
         </div>
     </div>
 
-        <div class="box">
-            <div class="box-body">
-                <div class="scroll-box">
-                    <table id="issuesTbl" class="table my-table table-striped table-bordered" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Dự án</th>
-                                <th>Mã lỗi</th>
-                                <th>Tóm tắt</th>
-                                <th>Trạng thái</th>
-                                <th>Người thực hiện</th>
-                                <th>Ngày tạo</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+    <div class="box">
+        <div class="box-body">
+            <div class="scroll-box">
+                <table id="issuesTbl" class="table my-table table-striped table-bordered" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Dự án</th>
+                            <th>Mã lỗi</th>
+                            <th>Tóm tắt</th>
+                            <th>Trạng thái</th>
+                            <th>Người thực hiện</th>
+                            <th>Ngày tạo</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
+    </div>
+<iframe id="downloadIframe" style="display:none;"></iframe>
 @stop
 
 @section('script')

@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
 
     Route::post('/attach-file', 'IssueController@attachFile');
     Route::get('/download-file/{fileName}', 'IssueController@downloadFile');
+    Route::get('/download-file-delete/{fileName}', 'IssueController@downloadFileAndDelete');
     Route::post('/delete-attachment', 'IssueController@deleteAttachment');
 });
 
@@ -33,4 +34,5 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'search', 'namespace' 
     Route::get('/', 'IssueController@search');
     Route::post('/load-assignee-status', 'IssueController@loadAssigneeStatus');
     Route::post('/ajax-load-data', 'IssueController@ajaxLoadData');
+    Route::post('/create-report', 'IssueController@createReport');
 });
