@@ -209,6 +209,14 @@ class IssueController extends Controller
         }
     }
 
+    public function linkIssue(Request $request)
+    {
+        if ($request->isMethod('post') && Auth::check()) {
+            $params = $request->all();
+            dd($params);
+        }
+    }
+
     public function attachFile(Request $request)
     {
         if ($request->isMethod('post') && Auth::check()) {

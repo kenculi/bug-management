@@ -45,32 +45,33 @@
             </select>
             <span class="text-danger">{{ $errors->first('emailInvite') }}</span>
         </div>
+        @if(!empty($acceptedInvite))
+        <hr>
         <div class="row">
             <div class="col-md-10 col-xs-10">
-                @if(!empty($acceptedInvite))
                 {{ $acceptedInvite }}
-                @endif
             </div>
             <div class="col-md-2 col-xs-2"><span class="label label-success">Chấp nhận</span></div>
         </div>
+        @endif
+        @if(!empty($pendingInvite))
         <hr>
         <div class="row">
             <div class="col-md-10 col-xs-10">
-                @if(!empty($pendingInvite))
                 {{ $pendingInvite }}
-                @endif
             </div>
             <div class="col-md-2 col-xs-2"><span class="label label-warning">Đang đợi</span></div>
         </div>
+        @endif
+        @if(!empty($deniedInvite))
         <hr>
         <div class="row">
             <div class="col-md-10 col-xs-10">
-                @if(!empty($deniedInvite))
                 {{ $deniedInvite }}
-                @endif
             </div>
             <div class="col-md-2 col-xs-2"><span class="label label-danger">Từ chối</span></div>
         </div>
+        @endif
     </div>
     <div class="box-footer text-center">
         <button type="button" class="btn btn-cancel btn-default for-cancel">Hủy</button>

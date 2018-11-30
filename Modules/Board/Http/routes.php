@@ -11,6 +11,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'board', 'namespace' =
     Route::post('/create-issue', 'BoardController@createIssue');
 
     Route::post('/update-desc', 'IssueController@updateDescription');
+    Route::post('/link-issue', 'IssueController@linkIssue');
     Route::post('/update-status-issue', 'IssueController@updateStatus');
     Route::post('/update-assignee', 'IssueController@updateAssignee');
     Route::post('/update-priority', 'IssueController@updatePriority');
